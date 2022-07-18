@@ -1,0 +1,20 @@
+{
+	"CONTROLLER.AUTH.POST_LOGIN.LOGGED_IN": "Successfully logged in",
+	"CONTROLLER.AUTH.POST_REGISTER.REGISTERED": "User successfully registered",
+	"CONTROLLER.AUTH.PUT_ME.UPDATED": "User successfully updated",
+	"GLOBAL.ERROR.NETWORK": "Network error",
+	"GLOBAL.ERROR.PRODUCT_QUANTITY": "Not enough product quantity",
+	"MIDDLEWARE.AUTH.MISSING_TOKEN": "Missing token",
+	"MIDDLEWARE.AUTH.NOT_AUTHORIZED": "User not authorized",
+	"MIDDLEWARE.AUTH.USER_NOT_FOUND": "User not found",
+	"VALIDATOR.EMAIL.IN_USE": "email is in use",
+	"VALIDATOR.EMAIL.NOT_VALID": "email is not valid",
+	"VALIDATOR.EMAIL.REQUIRED": "email is required",
+	"VALIDATOR.ADDRESS.REQUIRED": "address is required",
+	"VALIDATOR.PASSWORD.REQUIRED": "password is required",
+	"VALIDATOR.USER.CONFIRMED": "user is registered",
+	"VALIDATOR.USER.INVALID_PASSWORD": "invalid password",
+	"VALIDATOR.USER.NOT_FOUND": "user not found",
+	"VALIDATOR.NAME.REQUIRED": "VALIDATOR.NAME.REQUIRED",
+	"VALIDATOR.USER.EXISTS":"user already exists"
+}

@@ -1,0 +1,88 @@
+{
+	"swagger": "2.0",
+	"info": {
+		"version": "1.0.0-alpha",
+		"title": "Karen Web App API",
+		"description": "Karen Web App API Information",
+		"license": {
+			"name": "MIT",
+			"url": "https://opensource.org/licenses/MIT"
+		}
+	},
+	"host": "https://destilerija-be.herokuapp.com",
+	"basePath": "/api",
+	"schemes": [
+		"http"
+	],
+	"consumes": [
+		"application/json"
+	],
+	"produces": [
+		"application/json"
+	],
+	"tags": [
+		{
+			"name": "Auth",
+			"description": ""
+		},
+		{
+			"name": "Users",
+			"description": ""
+		}
+	],
+	"definitions": {
+		"User": {
+			"type": "object",
+			"properties": {
+				"_id": {
+					"description": "User ID.\n@example 507f191e810c19729de860ea",
+					"type": "string",
+					"format": "uuid"
+				},
+				"role": {
+					"description": "User Role.\n@example organisation-owner",
+					"type": "string",
+					"enum": [
+						"admin",
+						"business",
+						"participant"
+					]
+				},
+				"permissions": {
+					"description": "User Permissions.\n@example ['read:users', 'write:users']",
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"email": {
+					"description": "User Email.\n@example user@gmail.com",
+					"type": "string",
+					"format": "email"
+				},
+				"password": {
+					"description": "User Password Encrypted.",
+					"type": "string"
+				},
+				"name": {
+					"description": "User Full Name.\n@example John Johnson",
+					"type": "string"
+				},
+				"confirmed": {
+					"description": "User Confirmation Status.\n@example true",
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"_id",
+				"organisation",
+				"role",
+				"permissions",
+				"email",
+				"password",
+				"name",
+				"confirmed"
+			]
+		}
+	}
+}
