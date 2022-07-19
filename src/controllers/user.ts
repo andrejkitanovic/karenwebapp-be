@@ -43,30 +43,30 @@ export const getUsers: RequestHandler = async (req, res, next) => {
 // 	}
 // };
 
-// export const deleteUser: RequestHandler = async (req, res, next) => {
-// 	try {
-// 		const { id } = req.params;
+export const deleteUser: RequestHandler = async (req, res, next) => {
+	try {
+		const { id } = req.params;
 
-// 		await User.findByIdAndDelete(id);
+		await User.findByIdAndDelete(id);
 
-// 		res.json({
-// 			message: i18n.__('CONTROLLER.USER.DELETE_USER.DELETED'),
-// 		});
-// 	} catch (err) {
-// 		next(err);
-// 	}
-// };
+		res.json({
+			message: i18n.__('CONTROLLER.USER.DELETE_USER.DELETED'),
+		});
+	} catch (err) {
+		next(err);
+	}
+};
 
-// export const getSingleUnconfirmedUser: RequestHandler = async (req, res, next) => {
-// 	try {
-// 		const { id } = req.params;
+export const getSingleUser: RequestHandler = async (req, res, next) => {
+	try {
+		const { id } = req.params;
 
-// 		const user = await User.findById(id).populate('organisation');
+		const user = await User.findById(id);
 
-// 		res.json({
-// 			data: user,
-// 		});
-// 	} catch (err) {
-// 		next(err);
-// 	}
-// };
+		res.json({
+			data: user,
+		});
+	} catch (err) {
+		next(err);
+	}
+};

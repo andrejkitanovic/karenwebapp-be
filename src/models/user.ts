@@ -42,5 +42,4 @@ const userSchema: Schema = new Schema({
 });
 
 const objectModel = model<IUser>('User', userSchema);
-
 export default objectModel;

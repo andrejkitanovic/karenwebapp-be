@@ -45,13 +45,13 @@ export const postLogin: RequestHandler = async (req, res, next) => {
 
 export const postRegister: RequestHandler = async (req, res, next) => {
 	try {
-		const { name, email, password } = req.body;
+		const { role, name, email, password } = req.body;
 
 		const hashedPassword = await bcrypt.hash(password, 12);
 
 		const user = await User.create({
 			password: hashedPassword,
-			role: 'participant',
+			role,
 			name,
 			email,
 		});

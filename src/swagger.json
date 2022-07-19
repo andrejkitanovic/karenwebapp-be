@@ -83,6 +83,99 @@
 				"name",
 				"confirmed"
 			]
+		},
+		"Post": {
+			"type": "object",
+			"properties": {
+				"_id": {
+					"description": "Post ID.\n@example 507f191e810c19729de860ea",
+					"type": "string",
+					"format": "uuid"
+				},
+				"user": {
+					"description": "Post Creator.",
+					"$ref": "#/definitions/User"
+				},
+				"content": {
+					"description": "Post Content.\n@example <h1>New Blog</h1><p>This is my blog</p>",
+					"type": "string"
+				},
+				"votes": {
+					"description": "Post Votes.",
+					"type": "object",
+					"properties": {
+						"up": {
+							"description": "Post Upvotes.",
+							"type": "number"
+						},
+						"down": {
+							"description": "Post Downvotes.",
+							"type": "number"
+						}
+					},
+					"required": [
+						"up",
+						"down"
+					]
+				},
+				"comments": {
+					"description": "Post Comments.",
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/Comment"
+					}
+				},
+				"createdAt": {
+					"description": "Post Creation Date.",
+					"type": "string"
+				},
+				"updatedAt": {
+					"description": "Post Latest Update Date.",
+					"type": "string"
+				}
+			},
+			"required": [
+				"_id",
+				"user",
+				"content",
+				"votes",
+				"comments",
+				"createdAt",
+				"updatedAt"
+			]
+		},
+		"Comment": {
+			"type": "object",
+			"properties": {
+				"_id": {
+					"description": "Comment ID.\n@example 507f191e810c19729de860ea",
+					"type": "string",
+					"format": "uuid"
+				},
+				"user": {
+					"description": "Comment Creator.",
+					"$ref": "#/definitions/User"
+				},
+				"post": {
+					"description": "Comment Post.",
+					"$ref": "#/definitions/Post"
+				},
+				"createdAt": {
+					"description": "Comment Creation Date.",
+					"type": "string"
+				},
+				"updatedAt": {
+					"description": "Comment Latest Update Date.",
+					"type": "string"
+				}
+			},
+			"required": [
+				"_id",
+				"user",
+				"post",
+				"createdAt",
+				"updatedAt"
+			]
 		}
 	}
 }

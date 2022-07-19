@@ -8,6 +8,8 @@
 	"MIDDLEWARE.AUTH.NOT_AUTHORIZED": "User not authorized",
 	"MIDDLEWARE.AUTH.USER_NOT_FOUND": "User not found",
 	"VALIDATOR.EMAIL.IN_USE": "email is in use",
+	"CONTROLLER.USER.DELETE_USER.DELETED": "User successfully deleted",
+	"CONTROLLER.POST.POST_POST.CREATED": "Post successfully created",
 	"VALIDATOR.EMAIL.NOT_VALID": "email is not valid",
 	"VALIDATOR.EMAIL.REQUIRED": "email is required",
 	"VALIDATOR.ADDRESS.REQUIRED": "address is required",
@@ -16,5 +18,5 @@
 	"VALIDATOR.USER.INVALID_PASSWORD": "invalid password",
 	"VALIDATOR.USER.NOT_FOUND": "user not found",
 	"VALIDATOR.NAME.REQUIRED": "VALIDATOR.NAME.REQUIRED",
-	"VALIDATOR.USER.EXISTS":"user already exists"
+	"VALIDATOR.USER.EXISTS": "user already exists"
 }
