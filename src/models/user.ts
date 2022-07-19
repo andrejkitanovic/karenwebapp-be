@@ -11,10 +11,12 @@ export type RoleType = `${Roles}`;
 export interface IUser extends Document {
 	role: RoleType;
 	permissions: PermissionsType[];
+	confirmed: boolean;
 	email: string;
 	password: string;
 	name: string;
-	confirmed: boolean;
+	followers: string[];
+	following: string[];
 }
 
 const userSchema: Schema = new Schema({
@@ -24,6 +26,10 @@ const userSchema: Schema = new Schema({
 		required: true,
 	},
 	permissions: [{ type: String }],
+	confirmed: {
+		type: Boolean,
+		default: false,
+	},
 	email: {
 		type: String,
 		required: true,
@@ -35,9 +41,21 @@ const userSchema: Schema = new Schema({
 	name: {
 		type: String,
 	},
-	confirmed: {
-		type: Boolean,
-		default: false,
+	followers: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: 'User',
+		},
+	],
+	following: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: 'User',
+		},
+	],
+	pinnedPosts: {
+		type: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
+		select: false,
 	},
 });
 

@@ -48,6 +48,10 @@
 						"participant"
 					]
 				},
+				"confirmed": {
+					"description": "User Confirmation Status.\n@example true",
+					"type": "boolean"
+				},
 				"permissions": {
 					"description": "User Permissions.\n@example ['read:users', 'write:users']",
 					"type": "array",
@@ -68,20 +72,39 @@
 					"description": "User Full Name.\n@example John Johnson",
 					"type": "string"
 				},
-				"confirmed": {
-					"description": "User Confirmation Status.\n@example true",
-					"type": "boolean"
+				"followers": {
+					"description": "User Followers.",
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/User"
+					}
+				},
+				"following": {
+					"description": "User Following.",
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/User"
+					}
+				},
+				"pinnedPosts": {
+					"description": "User Pinned Posts.",
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/Post"
+					}
 				}
 			},
 			"required": [
 				"_id",
 				"organisation",
 				"role",
+				"confirmed",
 				"permissions",
 				"email",
 				"password",
 				"name",
-				"confirmed"
+				"followers",
+				"following"
 			]
 		},
 		"Post": {

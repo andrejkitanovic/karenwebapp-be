@@ -10,7 +10,7 @@ export const getMe: RequestHandler = async (req, res, next) => {
 	try {
 		const { id } = req.auth;
 
-		const me = await User.findById(id);
+		const me = await User.findById(id).select('+pinnedPosts');
 
 		if (me) {
 			me.permissions = adminPermissions;
