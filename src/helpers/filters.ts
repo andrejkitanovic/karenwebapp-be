@@ -8,7 +8,7 @@ import {
 interface IFilters {
 	Model: Model<any>;
 	query: any;
-	populate?: string;
+	populate?: object;
 	searchFields?: string[];
 	defaultFilters?: { [x: string]: any };
 }
@@ -58,8 +58,9 @@ export const queryFilter = async ({ Model, query, populate, searchFields, defaul
 	}
 
 	let modelQuery = Model.find(findBy);
+
 	if (populate) {
-		modelQuery = modelQuery.populate({ path: populate });
+		modelQuery = modelQuery.populate(populate as any);
 	}
 	if (sort) {
 		modelQuery = modelQuery.sort(sort);

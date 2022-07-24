@@ -8,6 +8,11 @@ enum Permissions {
 	POSTS_WRITE = 'write:posts',
 	POSTS_UPDATE = 'update:posts',
 	POSTS_DELETE = 'delete:posts',
+
+	COMMENTS_READ = 'read:comments',
+	COMMENTS_WRITE = 'write:comments',
+	COMMENTS_UPDATE = 'update:comments',
+	COMMENTS_DELETE = 'delete:comments',
 }
 
 export type PermissionsType = `${Permissions}`;

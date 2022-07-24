@@ -183,6 +183,10 @@
 					"description": "Comment Post.",
 					"$ref": "#/definitions/Post"
 				},
+				"content": {
+					"description": "Comment Content.\n@example Usefull comment, thank you!",
+					"type": "string"
+				},
 				"createdAt": {
 					"description": "Comment Creation Date.",
 					"type": "string"
@@ -196,6 +200,7 @@
 				"_id",
 				"user",
 				"post",
+				"content",
 				"createdAt",
 				"updatedAt"
 			]

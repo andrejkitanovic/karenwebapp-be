@@ -10,6 +10,7 @@
 	"VALIDATOR.EMAIL.IN_USE": "email is in use",
 	"CONTROLLER.USER.DELETE_USER.DELETED": "User successfully deleted",
 	"CONTROLLER.POST.POST_POST.CREATED": "Post successfully created",
+	"CONTROLLER.COMMENT.POST_COMMENT.CREATED": "Comment successfully created",
 	"VALIDATOR.EMAIL.NOT_VALID": "email is not valid",
 	"VALIDATOR.EMAIL.REQUIRED": "email is required",
 	"VALIDATOR.ADDRESS.REQUIRED": "address is required",

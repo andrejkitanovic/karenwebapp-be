@@ -3,26 +3,17 @@ import { RequestHandler } from 'express';
 import i18n from 'helpers/i18n';
 import { queryFilter } from 'helpers/filters';
 import { createMeta } from 'helpers/meta';
+import Comment from 'models/comment';
 import Post from 'models/post';
 
-export const getPosts: RequestHandler = async (req, res, next) => {
+export const getComments: RequestHandler = async (req, res, next) => {
 	try {
 		// const { id } = req.auth;
 
 		const { data: posts, count } = await queryFilter({
-			Model: Post,
+			Model: Comment,
 			query: req.query,
-			populate: [
-				{
-					path: 'comments',
-					populate: {
-						path: 'user',
-					},
-				},
-				{
-					path: 'user',
-				},
-			],
+			// populate: ,
 			// searchFields: ['name', 'email'],
 			// defaultFilters: { _id: { $ne: id } },
 		});
@@ -36,18 +27,20 @@ export const getPosts: RequestHandler = async (req, res, next) => {
 	}
 };
 
-export const postPost: RequestHandler = async (req, res, next) => {
+export const postComment: RequestHandler = async (req, res, next) => {
 	try {
 		const { id } = req.auth;
-		const { content } = req.body;
+		const { post, content } = req.body;
 
-		await Post.create({
+		const comment = await Comment.create({
 			user: id,
+			post,
 			content,
 		});
+		await Post.findByIdAndUpdate(post, { $push: { comments: comment } });
 
 		res.json({
-			message: i18n.__('CONTROLLER.POST.POST_POST.CREATED'),
+			message: i18n.__('CONTROLLER.COMMENT.POST_COMMENT.CREATED'),
 		});
 	} catch (err) {
 		next(err);
