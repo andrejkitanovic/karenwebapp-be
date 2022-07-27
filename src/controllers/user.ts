@@ -70,3 +70,27 @@ export const getSingleUser: RequestHandler = async (req, res, next) => {
 		next(err);
 	}
 };
+
+export const postFollowUser: RequestHandler = async (req, res, next) => {
+	try {
+		const { id } = req.auth;
+		const { id: followId } = req.params;
+
+		const user = await User.findById(followId);
+		const isFollowing = user?.followers.includes(id);
+		console.log(user?.following)
+
+		await User.findByIdAndUpdate(id, {
+			[isFollowing ? `$pull` : `$addToSet`]: { following: id },
+		});
+		await User.findByIdAndUpdate(followId, {
+			[isFollowing ? `$pull` : `$addToSet`]: { followers: id },
+		});
+
+		res.json({
+			data: user,
+		});
+	} catch (err) {
+		next(err);
+	}
+};

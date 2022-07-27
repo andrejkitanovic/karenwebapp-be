@@ -13,6 +13,8 @@ enum Permissions {
 	COMMENTS_WRITE = 'write:comments',
 	COMMENTS_UPDATE = 'update:comments',
 	COMMENTS_DELETE = 'delete:comments',
+
+	NOTIFICATIONS_READT = 'read:notifications',
 }
 
 export type PermissionsType = `${Permissions}`;

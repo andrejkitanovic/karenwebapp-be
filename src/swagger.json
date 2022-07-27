@@ -76,14 +76,14 @@
 					"description": "User Followers.",
 					"type": "array",
 					"items": {
-						"$ref": "#/definitions/User"
+						"type": "string"
 					}
 				},
 				"following": {
 					"description": "User Following.",
 					"type": "array",
 					"items": {
-						"$ref": "#/definitions/User"
+						"type": "string"
 					}
 				},
 				"pinnedPosts": {
@@ -119,6 +119,18 @@
 					"description": "Post Creator.",
 					"$ref": "#/definitions/User"
 				},
+				"category": {
+					"description": "Post Category.\n@example The Negotiator",
+					"type": "string"
+				},
+				"involved": {
+					"description": "Post Involved.\n@example Manager",
+					"type": "string"
+				},
+				"opinion": {
+					"description": "Post Opinion.\n@example Mad",
+					"type": "string"
+				},
 				"content": {
 					"description": "Post Content.\n@example <h1>New Blog</h1><p>This is my blog</p>",
 					"type": "string"
@@ -129,11 +141,17 @@
 					"properties": {
 						"up": {
 							"description": "Post Upvotes.",
-							"type": "number"
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
 						},
 						"down": {
 							"description": "Post Downvotes.",
-							"type": "number"
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
 						}
 					},
 					"required": [
@@ -200,6 +218,47 @@
 				"_id",
 				"user",
 				"post",
+				"content",
+				"createdAt",
+				"updatedAt"
+			]
+		},
+		"Notification": {
+			"type": "object",
+			"properties": {
+				"_id": {
+					"description": "Notification ID.\n@example 507f191e810c19729de860ea",
+					"type": "string",
+					"format": "uuid"
+				},
+				"user": {
+					"description": "Notification Reciever.",
+					"$ref": "#/definitions/User"
+				},
+				"target": {
+					"description": "Notification Target.",
+					"$ref": "#/definitions/User"
+				},
+				"type": {
+					"description": "Notification Type.",
+					"type": "string",
+					"enum": [
+						"comment"
+					]
+				},
+				"createdAt": {
+					"description": "Notification Creation Date.",
+					"type": "string"
+				},
+				"updatedAt": {
+					"description": "Notification Latest Update Date.",
+					"type": "string"
+				}
+			},
+			"required": [
+				"_id",
+				"user",
+				"target",
 				"content",
 				"createdAt",
 				"updatedAt"
