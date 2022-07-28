@@ -4,6 +4,7 @@ export interface IComment extends Document {
 	user: string;
 	post: string;
 	content: string;
+	replies: IComment[];
 }
 
 const commentSchema: Schema = new Schema(
@@ -22,6 +23,12 @@ const commentSchema: Schema = new Schema(
 			type: String,
 			required: true,
 		},
+		replies: [
+			{
+				type: Schema.Types.ObjectId,
+				ref: 'Comment',
+			},
+		],
 	},
 	{ timestamps: true }
 );

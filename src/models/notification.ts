@@ -2,7 +2,9 @@ import { Schema, model, Document } from 'mongoose';
 
 export interface INotification extends Document {
 	user: string;
-	content: string;
+	target: string;
+	type: string;
+	opened: boolean;
 }
 
 const notificationSchema: Schema = new Schema(
@@ -21,6 +23,10 @@ const notificationSchema: Schema = new Schema(
 			type: String,
 			enum: ['comment'],
 			required: true,
+		},
+		opened: {
+			type: Boolean,
+			default: false,
 		},
 	},
 	{ timestamps: true }

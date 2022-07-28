@@ -246,6 +246,10 @@
 						"comment"
 					]
 				},
+				"opened": {
+					"description": "Notification Opened.",
+					"type": "boolean"
+				},
 				"createdAt": {
 					"description": "Notification Creation Date.",
 					"type": "string"
@@ -260,6 +264,7 @@
 				"user",
 				"target",
 				"content",
+				"opened",
 				"createdAt",
 				"updatedAt"
 			]

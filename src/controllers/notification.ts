@@ -35,7 +35,7 @@ export const getNotifications: RequestHandler = async (req, res, next) => {
 export const createCommentNotification = async (userId: string, postId: IPost) => {
 	const post = (await Post.findById(postId)) as IPost;
 
-	if (post.user !== userId) {
+	if (post.user.toString() !== userId) {
 		await Notification.create({
 			user: post.user,
 			target: userId,

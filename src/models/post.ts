@@ -1,8 +1,25 @@
 import { Schema, model, Document } from 'mongoose';
 import { IComment } from './comment';
 
+enum PostCategoryEnum {
+	CONSTANT_COMPLAINER = 'constant-complainer',
+	THE_NEGOTIATOR = 'the-negotiator',
+	DOESNT_PAY = 'doesnt-pay',
+	FREE_LUNCH_LADY = 'free-lunch-lady',
+	DISCOUNT_DEBBIE = 'discount-debbie',
+}
+
+enum PostOpinionEnum {
+	DISAPPOINTED = 'disappointed',
+	MAD = 'mad',
+	SCHOKED = 'schoked',
+}
+
 export interface IPost extends Document {
 	user: string;
+	category: PostCategoryEnum;
+	involved: string;
+	opinion: string;
 	content: string;
 	votes: {
 		up: string[];
@@ -20,7 +37,7 @@ const postSchema: Schema = new Schema(
 		},
 		category: {
 			type: String,
-			enum: ['constant-complainer', 'the-negotiator', 'doesnt-pay', 'free-lunch-lady', 'discount-debbie'],
+			enum: PostCategoryEnum,
 			required: true,
 		},
 		involved: {
@@ -29,7 +46,7 @@ const postSchema: Schema = new Schema(
 		},
 		opinion: {
 			type: String,
-			enum: ['disappointed', 'mad', 'shocked'],
+			enum: PostOpinionEnum,
 			required: true,
 		},
 		content: {
