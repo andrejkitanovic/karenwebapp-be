@@ -78,7 +78,6 @@ export const postFollowUser: RequestHandler = async (req, res, next) => {
 
 		const user = await User.findById(followId);
 		const isFollowing = user?.followers.includes(id);
-		console.log(user?.following)
 
 		await User.findByIdAndUpdate(id, {
 			[isFollowing ? `$pull` : `$addToSet`]: { following: id },

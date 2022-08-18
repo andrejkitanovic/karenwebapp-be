@@ -4,6 +4,7 @@ import defineRoutes from 'helpers/defineRoutes';
 import {
 	getMe as getMeController,
 	postLogin as postLoginController,
+	postRegisterVerification as postRegisterVerificationController,
 	postRegister as postRegisterController,
 	putMe as putMeController,
 } from 'controllers/auth';
@@ -26,6 +27,12 @@ defineRoutes(router, [
 		route: '/login',
 		validator: postLoginValidator,
 		controller: postLoginController,
+	},
+	{
+		method: 'post',
+		route: '/register-verification',
+		// validator: postRegisterVerificationValidator,
+		controller: postRegisterVerificationController,
 	},
 	{
 		method: 'post',

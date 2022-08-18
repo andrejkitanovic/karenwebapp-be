@@ -5,6 +5,7 @@ import bcrypt from 'bcryptjs';
 import i18n from 'helpers/i18n';
 import User from 'models/user';
 import { adminPermissions } from 'helpers/permissions';
+import { createVerificationCode } from './verificationCode';
 
 export const getMe: RequestHandler = async (req, res, next) => {
 	try {
@@ -37,6 +38,19 @@ export const postLogin: RequestHandler = async (req, res, next) => {
 		res.json({
 			token,
 			message: i18n.__('CONTROLLER.AUTH.POST_LOGIN.LOGGED_IN'),
+		});
+	} catch (err) {
+		next(err);
+	}
+};
+
+export const postRegisterVerification: RequestHandler = async (req, res, next) => {
+	try {
+		const { email } = req.body;
+		const code = await createVerificationCode(email);
+
+		res.json({
+			// message: i18n.__('CONTROLLER.AUTH.POST_REGISTER.REGISTERED'),
 		});
 	} catch (err) {
 		next(err);
