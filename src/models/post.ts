@@ -12,7 +12,7 @@ enum PostCategoryEnum {
 enum PostOpinionEnum {
 	DISAPPOINTED = 'disappointed',
 	MAD = 'mad',
-	SCHOKED = 'schoked',
+	SCHOCKED = 'schocked',
 }
 
 export interface IPost extends Document {

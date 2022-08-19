@@ -6,6 +6,8 @@ import {
 	deleteUser as deleteUserController,
 	getSingleUser as getSingleUserController,
 	postFollowUser as postFollowUserController,
+	getSingleUserFollowers as getSingleUserFollowersController,
+	getSingleUserFollowing as getSingleUserFollowingController,
 } from 'controllers/user';
 
 const router = Router();
@@ -37,6 +39,20 @@ defineRoutes(router, [
 		roles: ['participant', 'business', 'admin'],
 		permissions: ['write:users'],
 		controller: postFollowUserController,
+	},
+	{
+		method: 'get',
+		route: '/followers/:id',
+		roles: ['participant', 'business', 'admin'],
+		permissions: ['read:users'],
+		controller: getSingleUserFollowersController,
+	},
+	{
+		method: 'get',
+		route: '/following/:id',
+		roles: ['participant', 'business', 'admin'],
+		permissions: ['read:users'],
+		controller: getSingleUserFollowingController,
 	},
 ]);
 

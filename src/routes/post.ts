@@ -7,6 +7,8 @@ import {
 	deletePost as deletePostController,
 	postDownvotePost as postDownvotePostController,
 	postUpvotePost as postUpvotePostController,
+	getPinnedPosts as getPinnedPostsController,
+	postPinPost as postPinPostController,
 } from 'controllers/post';
 
 const router = Router();
@@ -45,6 +47,20 @@ defineRoutes(router, [
 		roles: ['participant', 'business', 'admin'],
 		permissions: ['write:posts'],
 		controller: postDownvotePostController,
+	},
+	{
+		method: 'get',
+		route: '/pinned',
+		roles: ['participant', 'business', 'admin'],
+		permissions: ['read:posts'],
+		controller: getPinnedPostsController,
+	},
+	{
+		method: 'post',
+		route: '/pin/:id',
+		roles: ['participant', 'business', 'admin'],
+		permissions: ['read:posts'],
+		controller: postPinPostController,
 	},
 ]);
 

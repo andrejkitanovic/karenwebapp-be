@@ -80,7 +80,7 @@ export const postFollowUser: RequestHandler = async (req, res, next) => {
 		const isFollowing = user?.followers.includes(id);
 
 		await User.findByIdAndUpdate(id, {
-			[isFollowing ? `$pull` : `$addToSet`]: { following: id },
+			[isFollowing ? `$pull` : `$addToSet`]: { following: followId },
 		});
 		await User.findByIdAndUpdate(followId, {
 			[isFollowing ? `$pull` : `$addToSet`]: { followers: id },
@@ -88,6 +88,34 @@ export const postFollowUser: RequestHandler = async (req, res, next) => {
 
 		res.json({
 			data: user,
+		});
+	} catch (err) {
+		next(err);
+	}
+};
+
+export const getSingleUserFollowers: RequestHandler = async (req, res, next) => {
+	try {
+		const { id } = req.params;
+
+		const user = await User.findById(id).populate('followers').select('followers');
+
+		res.json({
+			data: user?.followers,
+		});
+	} catch (err) {
+		next(err);
+	}
+};
+
+export const getSingleUserFollowing: RequestHandler = async (req, res, next) => {
+	try {
+		const { id } = req.params;
+
+		const user = await User.findById(id).populate('following').select('following');
+
+		res.json({
+			data: user?.following,
 		});
 	} catch (err) {
 		next(err);

@@ -17,6 +17,7 @@ export interface IUser extends Document {
 	name: string;
 	followers: string[];
 	following: string[];
+	pinnedPosts: string[];
 }
 
 const userSchema: Schema = new Schema({

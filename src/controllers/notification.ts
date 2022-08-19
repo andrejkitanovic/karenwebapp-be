@@ -6,6 +6,8 @@ import { createMeta } from 'helpers/meta';
 // MODELS
 import Notification from 'models/notification';
 import Post, { IPost } from 'models/post';
+import User, { IUser } from 'models/user';
+import { sendEmailNotification } from 'utils/mailer';
 
 export const getNotifications: RequestHandler = async (req, res, next) => {
 	try {
@@ -32,8 +34,23 @@ export const getNotifications: RequestHandler = async (req, res, next) => {
 	}
 };
 
+export const postReadNotification: RequestHandler = async (req, res, next) => {
+	try {
+		const { id: notificationId } = req.params;
+
+		await Notification.findByIdAndUpdate(notificationId, { opened: true });
+
+		res.json({
+			// message: ''
+		});
+	} catch (err) {
+		next(err);
+	}
+};
+
 export const createCommentNotification = async (userId: string, postId: IPost) => {
 	const post = (await Post.findById(postId)) as IPost;
+	const user = (await User.findById(post.user)) as IUser;
 
 	if (post.user.toString() !== userId) {
 		await Notification.create({
@@ -42,4 +59,8 @@ export const createCommentNotification = async (userId: string, postId: IPost) =
 			type: 'comment',
 		});
 	}
+
+	await sendEmailNotification({
+		email: user.email,
+	});
 };

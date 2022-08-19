@@ -4,6 +4,7 @@ import i18n from 'helpers/i18n';
 import { queryFilter } from 'helpers/filters';
 import { createMeta } from 'helpers/meta';
 import Post from 'models/post';
+import User from 'models/user';
 import Comment from 'models/comment';
 
 export const getPosts: RequestHandler = async (req, res, next) => {
@@ -121,6 +122,58 @@ export const postDownvotePost: RequestHandler = async (req, res, next) => {
 
 		res.json({
 			message: i18n.__('CONTROLLER.POST.POST_DOWNVOTE_POST.DOWNVOTED'),
+		});
+	} catch (err) {
+		next(err);
+	}
+};
+
+export const getPinnedPosts: RequestHandler = async (req, res, next) => {
+	try {
+		const { id } = req.auth;
+
+		const user = await User.findById(id).select('pinnedPosts');
+		const { data: posts, count } = await queryFilter({
+			Model: Post,
+			query: req.query,
+			populate: [
+				{
+					path: 'comments',
+					populate: {
+						path: 'user',
+					},
+				},
+				{
+					path: 'user',
+				},
+			],
+			searchFields: ['involved', 'content'],
+			defaultFilters: { _id: { $in: user?.pinnedPosts } },
+		});
+
+		res.json({
+			data: posts,
+			meta: createMeta({ count }),
+		});
+	} catch (err) {
+		next(err);
+	}
+};
+
+export const postPinPost: RequestHandler = async (req, res, next) => {
+	try {
+		const { id } = req.auth;
+		const { id: postId } = req.params;
+
+		const user = await User.findById(id).select('pinnedPosts');
+		const isPinned = user?.pinnedPosts?.includes(postId);
+
+		await User.findByIdAndUpdate(id, {
+			[isPinned ? `$pull` : `$addToSet`]: { pinnedPosts: postId },
+		});
+
+		res.json({
+			// message: i18n.__('CONTROLLER.POST.POST_DOWNVOTE_POST.DOWNVOTED'),
 		});
 	} catch (err) {
 		next(err);

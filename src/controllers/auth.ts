@@ -6,6 +6,7 @@ import i18n from 'helpers/i18n';
 import User from 'models/user';
 import { adminPermissions } from 'helpers/permissions';
 import { createVerificationCode } from './verificationCode';
+import { sendEmailVerification, sendEmailWelcome } from 'utils/mailer';
 
 export const getMe: RequestHandler = async (req, res, next) => {
 	try {
@@ -49,6 +50,8 @@ export const postRegisterVerification: RequestHandler = async (req, res, next) =
 		const { email } = req.body;
 		const code = await createVerificationCode(email);
 
+		await sendEmailVerification({ email, code });
+
 		res.json({
 			// message: i18n.__('CONTROLLER.AUTH.POST_REGISTER.REGISTERED'),
 		});
@@ -73,6 +76,8 @@ export const postRegister: RequestHandler = async (req, res, next) => {
 		const token = jwt.sign({ id: user._id }, process.env.DECODE_KEY || '', {
 			// expiresIn: "1h",
 		});
+
+		await sendEmailWelcome({ email });
 
 		res.json({
 			token,
