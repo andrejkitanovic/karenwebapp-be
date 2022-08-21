@@ -1,7 +1,7 @@
 import { Schema, model, Document } from 'mongoose';
 import { IComment } from './comment';
 
-enum PostCategoryEnum {
+export enum PostCategoryEnum {
 	CONSTANT_COMPLAINER = 'constant-complainer',
 	THE_NEGOTIATOR = 'the-negotiator',
 	DOESNT_PAY = 'doesnt-pay',
@@ -12,7 +12,7 @@ enum PostCategoryEnum {
 enum PostOpinionEnum {
 	DISAPPOINTED = 'disappointed',
 	MAD = 'mad',
-	SCHOCKED = 'schocked',
+	SHOCKED = 'shocked',
 }
 
 export interface IPost extends Document {

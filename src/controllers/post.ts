@@ -3,14 +3,12 @@ import { RequestHandler } from 'express';
 import i18n from 'helpers/i18n';
 import { queryFilter } from 'helpers/filters';
 import { createMeta } from 'helpers/meta';
-import Post from 'models/post';
+import Post, { PostCategoryEnum } from 'models/post';
 import User from 'models/user';
 import Comment from 'models/comment';
 
 export const getPosts: RequestHandler = async (req, res, next) => {
 	try {
-		// const { id } = req.auth;
-
 		const { data: posts, count } = await queryFilter({
 			Model: Post,
 			query: req.query,
@@ -26,7 +24,6 @@ export const getPosts: RequestHandler = async (req, res, next) => {
 				},
 			],
 			searchFields: ['involved', 'content'],
-			// defaultFilters: { _id: { $ne: id } },
 		});
 
 		res.json({
@@ -68,6 +65,23 @@ export const deletePost: RequestHandler = async (req, res, next) => {
 
 		res.json({
 			message: i18n.__('CONTROLLER.POST.DELETE_POST.DELETED'),
+		});
+	} catch (err) {
+		next(err);
+	}
+};
+
+export const getPostsCategoryCount: RequestHandler = async (req, res, next) => {
+	try {
+		const data: { [category: string]: number } = {};
+
+		for await (const category of Object.values(PostCategoryEnum)) {
+			data[category] = await Post.count({ category });
+		}
+		data.total = await Post.count();
+
+		res.json({
+			data,
 		});
 	} catch (err) {
 		next(err);

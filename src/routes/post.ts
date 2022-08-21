@@ -3,6 +3,7 @@ import defineRoutes from 'helpers/defineRoutes';
 
 import {
 	getPosts as getPostsController,
+	getPostsCategoryCount as getPostsCategoryCountController,
 	postPost as postPostController,
 	deletePost as deletePostController,
 	postDownvotePost as postDownvotePostController,
@@ -33,6 +34,13 @@ defineRoutes(router, [
 		roles: ['participant', 'business', 'admin'],
 		permissions: ['delete:posts'],
 		controller: deletePostController,
+	},
+	{
+		method: 'get',
+		route: '/category/count',
+		roles: ['participant', 'business', 'admin'],
+		permissions: ['read:posts'],
+		controller: getPostsCategoryCountController,
 	},
 	{
 		method: 'post',

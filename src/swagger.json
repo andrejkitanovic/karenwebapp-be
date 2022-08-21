@@ -90,7 +90,7 @@
 					"description": "User Pinned Posts.",
 					"type": "array",
 					"items": {
-						"$ref": "#/definitions/Post"
+						"type": "string"
 					}
 				}
 			},
