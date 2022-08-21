@@ -20,45 +20,48 @@ export interface IUser extends Document {
 	pinnedPosts: string[];
 }
 
-const userSchema: Schema = new Schema({
-	role: {
-		type: String,
-		enum: Roles,
-		required: true,
-	},
-	permissions: [{ type: String }],
-	confirmed: {
-		type: Boolean,
-		default: false,
-	},
-	email: {
-		type: String,
-		required: true,
-	},
-	password: {
-		type: String,
-		select: false,
-	},
-	name: {
-		type: String,
-	},
-	followers: [
-		{
-			type: Schema.Types.ObjectId,
-			ref: 'User',
+const userSchema: Schema = new Schema(
+	{
+		role: {
+			type: String,
+			enum: Roles,
+			required: true,
 		},
-	],
-	following: [
-		{
-			type: Schema.Types.ObjectId,
-			ref: 'User',
+		permissions: [{ type: String }],
+		confirmed: {
+			type: Boolean,
+			default: false,
 		},
-	],
-	pinnedPosts: {
-		type: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
-		select: false,
+		email: {
+			type: String,
+			required: true,
+		},
+		password: {
+			type: String,
+			select: false,
+		},
+		name: {
+			type: String,
+		},
+		followers: [
+			{
+				type: Schema.Types.ObjectId,
+				ref: 'User',
+			},
+		],
+		following: [
+			{
+				type: Schema.Types.ObjectId,
+				ref: 'User',
+			},
+		],
+		pinnedPosts: {
+			type: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
+			select: false,
+		},
 	},
-});
+	{ timestamps: true }
+);
 
 const objectModel = model<IUser>('User', userSchema);
 export default objectModel;

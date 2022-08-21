@@ -3,7 +3,8 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
 import i18n from 'helpers/i18n';
-import User from 'models/user';
+import User, { Roles } from 'models/user';
+import Company from 'models/company';
 import { adminPermissions } from 'helpers/permissions';
 import { createVerificationCode } from './verificationCode';
 import { sendEmailVerification, sendEmailWelcome } from 'utils/mailer';
@@ -72,6 +73,16 @@ export const postRegister: RequestHandler = async (req, res, next) => {
 			name,
 			email,
 		});
+
+		if (role === Roles.BUSINESS) {
+			const { companyName, companyType, companyEmail } = req.body;
+			await Company.create({
+				user: user._id,
+				name: companyName,
+				type: companyType,
+				email: companyEmail,
+			});
+		}
 
 		const token = jwt.sign({ id: user._id }, process.env.DECODE_KEY || '', {
 			// expiresIn: "1h",
