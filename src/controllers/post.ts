@@ -20,6 +20,12 @@ export const getPosts: RequestHandler = async (req, res, next) => {
 					},
 				},
 				{
+					path: 'comments',
+					populate: {
+						path: 'replies',
+					},
+				},
+				{
 					path: 'user',
 				},
 			],

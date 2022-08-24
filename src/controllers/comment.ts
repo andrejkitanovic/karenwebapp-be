@@ -18,7 +18,14 @@ export const getComments: RequestHandler = async (req, res, next) => {
 		const { data: posts, count } = await queryFilter({
 			Model: Comment,
 			query: req.query,
-			// populate: ,
+			populate: [
+				{
+					path: 'user',
+				},
+				{
+					path: 'replies',
+				},
+			],
 			// searchFields: ['name', 'email'],
 			// defaultFilters: { _id: { $ne: id } },
 		});
@@ -63,6 +70,28 @@ export const deleteComment: RequestHandler = async (req, res, next) => {
 
 		res.json({
 			message: i18n.__('CONTROLLER.COMMENT.DELETE_COMMENT.DELETED'),
+		});
+	} catch (err) {
+		next(err);
+	}
+};
+
+export const postCommentReply: RequestHandler = async (req, res, next) => {
+	try {
+		const { id } = req.auth;
+		const { id: commentId } = req.params;
+		const { content } = req.body;
+
+		const comment = await Comment.create({
+			user: id,
+			content,
+		});
+		await Comment.findByIdAndUpdate(commentId, {
+			$addToSet: { comments: comment._id },
+		});
+
+		res.json({
+			message: i18n.__('CONTROLLER.COMMENT.POST_COMMENT_REPLY.CREATED'),
 		});
 	} catch (err) {
 		next(err);

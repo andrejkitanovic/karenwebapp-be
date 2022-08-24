@@ -5,6 +5,7 @@ import {
 	getComments as getCommentsController,
 	postComment as postCommentController,
 	deleteComment as deleteCommentController,
+	postCommentReply as postCommentReplyController
 } from 'controllers/comment';
 
 const router = Router();
@@ -29,6 +30,13 @@ defineRoutes(router, [
 		roles: ['participant', 'business', 'admin'],
 		permissions: ['delete:comments'],
 		controller: deleteCommentController,
+	},
+	{
+		method: 'post',
+		route: '/:id/reply',
+		roles: ['participant', 'business', 'admin'],
+		permissions: ['write:comments'],
+		controller: postCommentReplyController,
 	},
 ]);
 

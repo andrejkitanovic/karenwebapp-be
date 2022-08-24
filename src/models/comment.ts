@@ -2,7 +2,7 @@ import { Schema, model, Document } from 'mongoose';
 
 export interface IComment extends Document {
 	user: string;
-	post: string;
+	post?: string;
 	content: string;
 	replies: IComment[];
 }
@@ -17,7 +17,6 @@ const commentSchema: Schema = new Schema(
 		post: {
 			type: Schema.Types.ObjectId,
 			ref: 'Post',
-			required: true,
 		},
 		content: {
 			type: String,

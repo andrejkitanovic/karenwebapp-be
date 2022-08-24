@@ -35,7 +35,6 @@ export const getCordinatesAddress: RequestHandler = async (req, res, next) => {
 		const { lat, lng } = req.query;
 
 		const address = await googleGetCordinatesAddress(lat as string, lng as string);
-		console.log(address);
 
 		res.json({
 			data: address,
