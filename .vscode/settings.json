@@ -1,4 +1,14 @@
+// {
+//     "typescript.tsdk": "node_modules/typescript/lib",
+// }
 {
-    "typescript.tsdk": "node_modules/typescript/lib",
-    "compile-hero.disable-compile-files-on-did-save-code": true
+  "eslint.enable": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  },
+  "prettier.requireConfig": true,
+
+  "typescript.tsdk": "node_modules/typescript/lib",
+  
+  "compile-hero.disable-compile-files-on-did-save-code": true
 }

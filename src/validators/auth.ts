@@ -1,7 +1,6 @@
+import bcrypt from "bcryptjs";
 import { body } from "express-validator";
 import i18n from "helpers/i18n";
-import bcrypt from "bcryptjs";
-
 import User from "models/user";
 
 export const postLogin = [

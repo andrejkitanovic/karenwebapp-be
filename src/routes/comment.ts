@@ -1,12 +1,11 @@
-import { Router } from "express";
-import defineRoutes from "helpers/defineRoutes";
-
 import {
+  deleteComment as deleteCommentController,
   getComments as getCommentsController,
   postComment as postCommentController,
-  deleteComment as deleteCommentController,
   postCommentReply as postCommentReplyController,
 } from "controllers/comment";
+import { Router } from "express";
+import defineRoutes from "helpers/defineRoutes";
 
 const router = Router();
 defineRoutes(router, [

@@ -1,5 +1,5 @@
-import { RequestHandler } from "express";
 import dayjs from "dayjs";
+import { RequestHandler } from "express";
 
 const logger: RequestHandler = (req, res, next) => {
   const { method, baseUrl, headers } = req;

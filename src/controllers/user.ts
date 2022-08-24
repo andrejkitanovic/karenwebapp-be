@@ -1,5 +1,4 @@
 import { RequestHandler } from "express";
-
 import { queryFilter } from "helpers/filters";
 import { createMeta } from "helpers/meta";
 import User from "models/user";

@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
 import { Express } from "express";
+import mongoose from "mongoose";
 
 const PORT: number | string = process.env.PORT || 8080;
 

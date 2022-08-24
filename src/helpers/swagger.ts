@@ -1,5 +1,6 @@
-import express, { Express } from "express";
 import path from "path";
+
+import express, { Express } from "express";
 import swaggerUI from "swagger-ui-express";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires

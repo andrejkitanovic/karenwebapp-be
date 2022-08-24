@@ -1,5 +1,5 @@
-import requireDir from "require-dir";
 import { Express } from "express";
+import requireDir from "require-dir";
 
 const dir = requireDir(__dirname);
 

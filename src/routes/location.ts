@@ -1,11 +1,10 @@
-import { Router } from "express";
-import defineRoutes from "helpers/defineRoutes";
-
 import {
+  getCordinatesAddress as getCordinatesAddressController,
   getLocation as getLocationController,
   getSearchLocations as getSearchLocationsController,
-  getCordinatesAddress as getCordinatesAddressController,
 } from "controllers/location";
+import { Router } from "express";
+import defineRoutes from "helpers/defineRoutes";
 
 const router = Router();
 defineRoutes(router, [

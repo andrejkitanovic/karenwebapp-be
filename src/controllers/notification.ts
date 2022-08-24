@@ -1,8 +1,6 @@
 import { RequestHandler } from "express";
-
 import { queryFilter } from "helpers/filters";
 import { createMeta } from "helpers/meta";
-
 // MODELS
 import Notification from "models/notification";
 import Post, { IPost } from "models/post";

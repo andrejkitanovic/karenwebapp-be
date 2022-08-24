@@ -1,13 +1,13 @@
-import { RequestHandler } from "express";
-import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-
+import { RequestHandler } from "express";
 import i18n from "helpers/i18n";
-import User, { Roles } from "models/user";
-import Company from "models/company";
 import { adminPermissions } from "helpers/permissions";
-import { createVerificationCode } from "./verificationCode";
+import jwt from "jsonwebtoken";
+import Company from "models/company";
+import User, { Roles } from "models/user";
 import { sendEmailVerification, sendEmailWelcome } from "utils/mailer";
+
+import { createVerificationCode } from "./verificationCode";
 
 export const getMe: RequestHandler = async (req, res, next) => {
   try {

@@ -1,6 +1,7 @@
+import path from "path";
+
 import { RequestHandler } from "express";
 import i18n from "i18n";
-import path from "path";
 
 export const defaultLocale = "en";
 

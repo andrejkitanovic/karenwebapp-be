@@ -1,13 +1,12 @@
-import { Router } from "express";
-import defineRoutes from "helpers/defineRoutes";
-
 import {
   getMe as getMeController,
   postLogin as postLoginController,
-  postRegisterVerification as postRegisterVerificationController,
   postRegister as postRegisterController,
+  postRegisterVerification as postRegisterVerificationController,
   putMe as putMeController,
 } from "controllers/auth";
+import { Router } from "express";
+import defineRoutes from "helpers/defineRoutes";
 import {
   postLogin as postLoginValidator,
   postRegister as postRegisterValidator,

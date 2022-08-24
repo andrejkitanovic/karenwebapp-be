@@ -1,11 +1,10 @@
 import { RequestHandler } from "express";
-
-import i18n from "helpers/i18n";
 import { queryFilter } from "helpers/filters";
+import i18n from "helpers/i18n";
 import { createMeta } from "helpers/meta";
+import Comment from "models/comment";
 import Post, { PostCategoryEnum } from "models/post";
 import User from "models/user";
-import Comment from "models/comment";
 
 export const getPosts: RequestHandler = async (req, res, next) => {
   try {

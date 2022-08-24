@@ -1,9 +1,7 @@
 import { RequestHandler } from "express";
-
-import i18n from "helpers/i18n";
 import { queryFilter } from "helpers/filters";
+import i18n from "helpers/i18n";
 import { createMeta } from "helpers/meta";
-
 // MODELS
 import Comment from "models/comment";
 import Post from "models/post";

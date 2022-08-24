@@ -1,14 +1,13 @@
-import { Router } from "express";
-import defineRoutes from "helpers/defineRoutes";
-
 import {
-  getUsers as getUsersController,
   deleteUser as deleteUserController,
   getSingleUser as getSingleUserController,
-  postFollowUser as postFollowUserController,
   getSingleUserFollowers as getSingleUserFollowersController,
   getSingleUserFollowing as getSingleUserFollowingController,
+  getUsers as getUsersController,
+  postFollowUser as postFollowUserController,
 } from "controllers/user";
+import { Router } from "express";
+import defineRoutes from "helpers/defineRoutes";
 
 const router = Router();
 defineRoutes(router, [

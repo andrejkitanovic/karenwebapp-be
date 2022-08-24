@@ -1,11 +1,10 @@
 import { IRouter, RequestHandler } from "express";
 import { ValidationChain } from "express-validator";
-
-import validatorMiddleware from "middlewares/validator";
+import { PermissionsType } from "helpers/permissions";
 import auth from "middlewares/auth";
 import loggerMiddleware from "middlewares/logger";
+import validatorMiddleware from "middlewares/validator";
 import { RoleType } from "models/user";
-import { PermissionsType } from "helpers/permissions";
 
 interface IRoute {
   method: "get" | "post" | "put" | "patch" | "delete";

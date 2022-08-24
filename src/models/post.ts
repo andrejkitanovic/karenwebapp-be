@@ -1,4 +1,5 @@
-import { Schema, model, Document } from "mongoose";
+import { Document, Schema, model } from "mongoose";
+
 import { IComment } from "./comment";
 
 export enum PostCategoryEnum {

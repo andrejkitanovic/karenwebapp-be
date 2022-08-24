@@ -1,16 +1,15 @@
+import {
+  deletePost as deletePostController,
+  getPinnedPosts as getPinnedPostsController,
+  getPostsCategoryCount as getPostsCategoryCountController,
+  getPosts as getPostsController,
+  postDownvotePost as postDownvotePostController,
+  postPinPost as postPinPostController,
+  postPost as postPostController,
+  postUpvotePost as postUpvotePostController,
+} from "controllers/post";
 import { Router } from "express";
 import defineRoutes from "helpers/defineRoutes";
-
-import {
-  getPosts as getPostsController,
-  getPostsCategoryCount as getPostsCategoryCountController,
-  postPost as postPostController,
-  deletePost as deletePostController,
-  postDownvotePost as postDownvotePostController,
-  postUpvotePost as postUpvotePostController,
-  getPinnedPosts as getPinnedPostsController,
-  postPinPost as postPinPostController,
-} from "controllers/post";
 
 const router = Router();
 defineRoutes(router, [

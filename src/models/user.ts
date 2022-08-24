@@ -1,5 +1,5 @@
-import { Schema, model, Document } from "mongoose";
 import { PermissionsType } from "helpers/permissions";
+import { Document, Schema, model } from "mongoose";
 
 export enum Roles {
   ADMIN = "admin",

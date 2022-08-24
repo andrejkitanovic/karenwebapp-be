@@ -1,6 +1,7 @@
-import multer from "multer";
-import express, { Express } from "express";
 import path from "path";
+
+import express, { Express } from "express";
+import multer from "multer";
 
 export default function (app: Express) {
   const storage = multer.diskStorage({

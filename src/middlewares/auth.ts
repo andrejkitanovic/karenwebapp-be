@@ -1,7 +1,6 @@
 import { RequestHandler } from "express";
-import jwt from "jsonwebtoken";
-
 import i18n from "helpers/i18n";
+import jwt from "jsonwebtoken";
 import User, { RoleType } from "models/user";
 
 const auth: (roles: RoleType[]) => RequestHandler =
