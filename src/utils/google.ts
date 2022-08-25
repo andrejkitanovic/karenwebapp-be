@@ -2,7 +2,7 @@ import axios from "axios";
 import utf8 from "utf8";
 
 /*
-    Format such as: POSTCODE, CITY, ADDRESS, NAME
+    Format such as: ZIP, CITY, ADDRESS, NAME
 */
 export const googleGetLocation = async (address: string) => {
   try {

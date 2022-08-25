@@ -3,8 +3,8 @@ import { RequestHandler } from "express";
 import i18n from "helpers/i18n";
 import { adminPermissions } from "helpers/permissions";
 import jwt from "jsonwebtoken";
-import Company from "models/company";
-import User, { IUser, Roles } from "models/user";
+import User, { IUser } from "models/user";
+import { googleGetLocation } from "utils/google";
 import { sendEmailVerification, sendEmailWelcome } from "utils/mailer";
 
 import { createVerificationCode } from "./verificationCode";
@@ -14,7 +14,7 @@ export const getMe: RequestHandler = async (req, res, next) => {
     const { id } = req.auth;
 
     const me = (await User.findById(id).select("+pinnedPosts")) as IUser;
-    await me.withCompany();
+    // await me.withCompany();
 
     me.permissions = adminPermissions;
 
@@ -66,7 +66,8 @@ export const postRegisterVerification: RequestHandler = async (
 
 export const postRegister: RequestHandler = async (req, res, next) => {
   try {
-    const { role, name, email, password } = req.body;
+    const { role, name, email, password, companyAdministrator, companyType } =
+      req.body;
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
@@ -75,18 +76,9 @@ export const postRegister: RequestHandler = async (req, res, next) => {
       role,
       name,
       email,
+      companyAdministrator,
+      companyType,
     });
-
-    if (role === Roles.BUSINESS) {
-      const { companyName, companyType, email } = req.body;
-      await Company.create({
-        user: user._id,
-        name: companyName,
-        type: companyType,
-        email: email,
-      });
-    }
-
     const token = jwt.sign({ id: user._id }, process.env.DECODE_KEY || "", {
       // expiresIn: "1h",
     });
@@ -105,10 +97,22 @@ export const postRegister: RequestHandler = async (req, res, next) => {
 export const putMe: RequestHandler = async (req, res, next) => {
   try {
     const { id } = req.auth;
-    const { name } = req.body;
+    const { name, line, state, zip, phone } = req.body;
+
+    let location;
+    if (zip && state && line) {
+      location = await googleGetLocation(`${zip}, ${state}, ${line}`);
+    }
 
     await User.findByIdAndUpdate(id, {
       name,
+      address: {
+        line,
+        state,
+        zip,
+        location,
+      },
+      phone,
     });
 
     res.json({

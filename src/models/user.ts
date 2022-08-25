@@ -1,5 +1,5 @@
+import { stripeCreateCustomer } from "controllers/stripe";
 import { PermissionsType } from "helpers/permissions";
-import Company, { ICompany } from "models/company";
 import { Document, Schema, model } from "mongoose";
 
 export enum Roles {
@@ -19,6 +19,18 @@ export interface IUser extends Document {
   followers: string[];
   following: string[];
   pinnedPosts: string[];
+  address?: {
+    line: string;
+    state: string;
+    zip: string;
+    location: { lat: string; lng: string };
+  };
+  phone?: string;
+  // Company
+  companyAdministrator?: string;
+  companyType?: string;
+  // Payment
+  stripeId?: string;
 
   withCompany: () => void;
 }
@@ -62,15 +74,46 @@ const userSchema: Schema = new Schema(
       type: [{ type: Schema.Types.ObjectId, ref: "Post" }],
       select: false,
     },
+    address: {
+      line: {
+        type: String,
+      },
+      state: {
+        type: String,
+      },
+      zip: {
+        type: String,
+      },
+      location: {
+        lat: {
+          type: String,
+        },
+        lng: {
+          type: String,
+        },
+      },
+    },
+    phone: {
+      type: String,
+    },
+    // BUSINESS
+    companyAdministrator: {
+      type: String,
+    },
+    companyType: {
+      type: String,
+    },
+    // PAYMENTS
+    stripeId: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
 
-userSchema.methods.withCompany = async function () {
-  if (this.role === Roles.BUSINESS) {
-    const company = (await Company.findOne({ user: this._id })) as ICompany;
-    this.name = company.name;
-  }
-};
+userSchema.pre("validate", async function (next) {
+  this.stripeId = await stripeCreateCustomer(this);
+  next();
+});
 const objectModel = model<IUser>("User", userSchema);
 export default objectModel;

@@ -61,7 +61,7 @@ export const getSingleUser: RequestHandler = async (req, res, next) => {
     const { id } = req.params;
 
     const user = (await User.findById(id)) as IUser;
-    await user.withCompany();
+    // await user.withCompany();
 
     res.json({
       data: user,

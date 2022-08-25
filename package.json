@@ -46,6 +46,7 @@
 		"node-mailjet": "^3.4.1",
 		"node-schedule": "^2.1.0",
 		"require-dir": "^1.2.0",
+		"stripe": "^10.5.0",
 		"swagger-jsdoc": "^6.2.1",
 		"swagger-ui-express": "^4.4.0",
 		"utf8": "^3.0.0"

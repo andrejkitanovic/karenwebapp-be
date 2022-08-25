@@ -92,6 +92,36 @@
 					"items": {
 						"type": "string"
 					}
+				},
+				"address": {
+					"description": "User Address.",
+					"type": "object",
+					"properties": {
+						"line": {
+							"description": "User Address Street line",
+							"type": "string"
+						},
+						"state": {
+							"description": "User Address State",
+							"type": "string"
+						},
+						"zip": {
+							"description": "User Address Zip",
+							"type": "string"
+						}
+					}
+				},
+				"phone": {
+					"description": "User Phone Number.",
+					"type": "string"
+				},
+				"companyAdministrator": {
+					"description": "Company User Administrator.",
+					"type": "string"
+				},
+				"companyType": {
+					"description": "Company User Type.",
+					"type": "string"
 				}
 			},
 			"required": [
