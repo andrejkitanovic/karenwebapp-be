@@ -1,7 +1,7 @@
 import { RequestHandler } from "express";
 import { queryFilter } from "helpers/filters";
 import { createMeta } from "helpers/meta";
-import User from "models/user";
+import User, { IUser } from "models/user";
 
 export const getUsers: RequestHandler = async (req, res, next) => {
   try {
@@ -60,7 +60,8 @@ export const getSingleUser: RequestHandler = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const user = await User.findById(id);
+    const user = (await User.findById(id)) as IUser;
+    await user.withCompany();
 
     res.json({
       data: user,

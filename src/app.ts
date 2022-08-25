@@ -22,6 +22,7 @@ import errorMiddleware from "middlewares/error";
 import { i18nMiddleware } from "helpers/i18n";
 import connection from "helpers/connection";
 import routing from "routes";
+import "controllers/cron";
 
 const app = express();
 app.use(express.json());

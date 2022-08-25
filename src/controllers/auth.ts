@@ -4,7 +4,7 @@ import i18n from "helpers/i18n";
 import { adminPermissions } from "helpers/permissions";
 import jwt from "jsonwebtoken";
 import Company from "models/company";
-import User, { Roles } from "models/user";
+import User, { IUser, Roles } from "models/user";
 import { sendEmailVerification, sendEmailWelcome } from "utils/mailer";
 
 import { createVerificationCode } from "./verificationCode";
@@ -13,11 +13,10 @@ export const getMe: RequestHandler = async (req, res, next) => {
   try {
     const { id } = req.auth;
 
-    const me = await User.findById(id).select("+pinnedPosts");
+    const me = (await User.findById(id).select("+pinnedPosts")) as IUser;
+    await me.withCompany();
 
-    if (me) {
-      me.permissions = adminPermissions;
-    }
+    me.permissions = adminPermissions;
 
     res.json({
       data: me,
@@ -79,12 +78,12 @@ export const postRegister: RequestHandler = async (req, res, next) => {
     });
 
     if (role === Roles.BUSINESS) {
-      const { companyName, companyType, companyEmail } = req.body;
+      const { companyName, companyType, email } = req.body;
       await Company.create({
         user: user._id,
         name: companyName,
         type: companyType,
-        email: companyEmail,
+        email: email,
       });
     }
 

@@ -1,4 +1,5 @@
 import { PermissionsType } from "helpers/permissions";
+import Company, { ICompany } from "models/company";
 import { Document, Schema, model } from "mongoose";
 
 export enum Roles {
@@ -18,6 +19,8 @@ export interface IUser extends Document {
   followers: string[];
   following: string[];
   pinnedPosts: string[];
+
+  withCompany: () => void;
 }
 
 const userSchema: Schema = new Schema(
@@ -63,5 +66,11 @@ const userSchema: Schema = new Schema(
   { timestamps: true }
 );
 
+userSchema.methods.withCompany = async function () {
+  if (this.role === Roles.BUSINESS) {
+    const company = (await Company.findOne({ user: this._id })) as ICompany;
+    this.name = company.name;
+  }
+};
 const objectModel = model<IUser>("User", userSchema);
 export default objectModel;

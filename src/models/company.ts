@@ -11,6 +11,9 @@ export interface ICompany extends Document {
     zip: string;
   };
   phone?: string;
+  followers: string[];
+  following: string[];
+  pinnedPosts: string[];
 }
 
 const companySchema: Schema = new Schema({
@@ -43,6 +46,23 @@ const companySchema: Schema = new Schema({
   },
   phone: {
     type: String,
+  },
+
+  followers: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  following: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  pinnedPosts: {
+    type: [{ type: Schema.Types.ObjectId, ref: "Post" }],
+    select: false,
   },
 });
 
