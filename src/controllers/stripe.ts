@@ -17,7 +17,7 @@ export const stripeWebhook: RequestHandler = async (req, res) => {
   const { data, type } = req.body;
 
   const main = data.object;
-  console.log(main);
+  console.log(`[STRIPE] Main Object ${main}`);
 
   switch (type) {
     default:

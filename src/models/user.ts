@@ -1,4 +1,4 @@
-import { stripeCreateCustomer } from "controllers/stripe";
+// import { stripeCreateCustomer } from "controllers/stripe";
 import { PermissionsType } from "helpers/permissions";
 import { Document, Schema, model } from "mongoose";
 
@@ -111,9 +111,9 @@ const userSchema: Schema = new Schema(
   { timestamps: true }
 );
 
-userSchema.pre("validate", async function (next) {
-  this.stripeId = await stripeCreateCustomer(this);
-  next();
-});
+// userSchema.pre("validate", async function (next) {
+//   this.stripeId = await stripeCreateCustomer(this);
+//   next();
+// });
 const objectModel = model<IUser>("User", userSchema);
 export default objectModel;

@@ -1,123 +1,127 @@
-import nodeMailjet from 'node-mailjet';
-import { readFile } from 'helpers/readFile';
-import path from 'path';
+import path from "path";
 
-const mailjet = nodeMailjet.connect(process.env.MJ_APIKEY_PUBLIC ?? '', process.env.MJ_APIKEY_PRIVATE ?? '');
+import { readFile } from "helpers/readFile";
+import nodeMailjet from "node-mailjet";
+
+const mailjet = nodeMailjet.connect(
+  process.env.MJ_APIKEY_PUBLIC ?? "",
+  process.env.MJ_APIKEY_PRIVATE ?? ""
+);
 const From = {
-	Email: 'kitanovicandrej213@gmail.com',
-	Name: 'KARENWEBAPP',
+  Email: "kitanovicandrej213@gmail.com",
+  Name: "KARENWEBAPP",
 };
-const SubjectPrefix = 'KARENWEBAPP |';
+const SubjectPrefix = "KARENWEBAPP |";
 
 export const sendEmailVerification = async ({ email, code }: any) => {
-	try {
-		const html = await readFile({
-			path: path.join(__dirname, './templates/verificationCode.jade'),
-			context: { code },
-		});
+  try {
+    const html = await readFile({
+      path: path.join(__dirname, "./templates/verificationCode.jade"),
+      context: { code },
+    });
 
-		await mailjet.post('send', { version: 'v3.1' }).request({
-			Messages: [
-				{
-					From,
-					To: [
-						{
-							Email: email,
-						},
-					],
-					Subject: `${SubjectPrefix} Verification Code`,
-					HTMLPart: html,
-				},
-			],
-		});
+    await mailjet.post("send", { version: "v3.1" }).request({
+      Messages: [
+        {
+          From,
+          To: [
+            {
+              Email: email,
+            },
+          ],
+          Subject: `${SubjectPrefix} Verification Code`,
+          HTMLPart: html,
+        },
+      ],
+    });
 
-		return true;
-	} catch (err) {
-		throw new Error();
-	}
+    return true;
+  } catch (err) {
+    throw new Error();
+  }
 };
 
 export const sendEmailWelcome = async ({ email }: any) => {
-	try {
-		const html = await readFile({
-			path: path.join(__dirname, './templates/welcome.jade'),
-			context: {},
-		});
+  try {
+    const html = await readFile({
+      path: path.join(__dirname, "./templates/welcome.jade"),
+      context: {},
+    });
 
-		await mailjet.post('send', { version: 'v3.1' }).request({
-			Messages: [
-				{
-					From,
-					To: [
-						{
-							Email: email,
-						},
-					],
-					Subject: `${SubjectPrefix} Welcome`,
-					HTMLPart: html,
-				},
-			],
-		});
+    await mailjet.post("send", { version: "v3.1" }).request({
+      Messages: [
+        {
+          From,
+          To: [
+            {
+              Email: email,
+            },
+          ],
+          Subject: `${SubjectPrefix} Welcome`,
+          HTMLPart: html,
+        },
+      ],
+    });
 
-		return true;
-	} catch (err) {
-		throw new Error();
-	}
+    return true;
+  } catch (err) {
+    throw new Error();
+  }
 };
 
 export const sendEmailResetPassword = async ({ email }: any) => {
-	try {
-		const html = await readFile({
-			path: path.join(__dirname, './templates/resetPassword.jade'),
-			context: {},
-		});
+  try {
+    const html = await readFile({
+      path: path.join(__dirname, "./templates/resetPassword.jade"),
+      context: {},
+    });
 
-		await mailjet.post('send', { version: 'v3.1' }).request({
-			Messages: [
-				{
-					From,
-					To: [
-						{
-							Email: email,
-						},
-					],
-					Subject: `${SubjectPrefix} Reset Password`,
-					HTMLPart: html,
-				},
-			],
-		});
+    await mailjet.post("send", { version: "v3.1" }).request({
+      Messages: [
+        {
+          From,
+          To: [
+            {
+              Email: email,
+            },
+          ],
+          Subject: `${SubjectPrefix} Reset Password`,
+          HTMLPart: html,
+        },
+      ],
+    });
 
-		return true;
-	} catch (err) {
-		throw new Error();
-	}
+    return true;
+  } catch (err) {
+    throw new Error();
+  }
 };
 
 export const sendEmailNotification = async ({ email }: any) => {
-	try {
-		const html = await readFile({
-			path: path.join(__dirname, './templates/notification.jade'),
-			context: {},
-		});
+  try {
+    const html = await readFile({
+      path: path.join(__dirname, "./templates/notification.jade"),
+      context: {},
+    });
 
-		await mailjet.post('send', { version: 'v3.1' }).request({
-			Messages: [
-				{
-					From,
-					To: [
-						{
-							Email: email,
-						},
-					],
-					Subject: `${SubjectPrefix} Notification`,
-					HTMLPart: html,
-				},
-			],
-		});
+    await mailjet.post("send", { version: "v3.1" }).request({
+      Messages: [
+        {
+          From,
+          To: [
+            {
+              Email: email,
+            },
+          ],
+          Subject: `${SubjectPrefix} Notification`,
+          HTMLPart: html,
+        },
+      ],
+    });
 
-		return true;
-	} catch (err) {
-		console.log(err);
-		throw new Error();
-	}
+    return true;
+  } catch (err) {
+    console.log(err);
+    throw new Error();
+  }
 };
