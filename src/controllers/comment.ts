@@ -85,7 +85,7 @@ export const postCommentReply: RequestHandler = async (req, res, next) => {
       content,
     });
     await Comment.findByIdAndUpdate(commentId, {
-      $addToSet: { comments: comment._id },
+      $addToSet: { replies: comment._id },
     });
 
     res.json({

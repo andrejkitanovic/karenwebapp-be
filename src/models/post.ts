@@ -22,6 +22,9 @@ export interface IPost extends Document {
   involved: string;
   opinion: string;
   content: string;
+  address: {
+    location: { lat: string; lng: string };
+  };
   votes: {
     up: string[];
     down: string[];

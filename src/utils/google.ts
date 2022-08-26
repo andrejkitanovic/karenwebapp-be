@@ -33,7 +33,7 @@ export const googleGetCordinatesAddress = async (
     const url = `https://maps.googleapis.com/maps/api/geocode/json`;
     const { data }: any = await axios.get(url, {
       params: {
-        latLng: `${lat},${lng}`,
+        latlng: `${lat},${lng}`,
         key: process.env.GOOGLE_APIKEY,
       },
     });

@@ -235,6 +235,13 @@
 					"description": "Comment Content.\n@example Usefull comment, thank you!",
 					"type": "string"
 				},
+				"replies": {
+					"description": "Comment Replies.",
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/Comment"
+					}
+				},
 				"createdAt": {
 					"description": "Comment Creation Date.",
 					"type": "string"
@@ -249,6 +256,7 @@
 				"user",
 				"post",
 				"content",
+				"replies",
 				"createdAt",
 				"updatedAt"
 			]
