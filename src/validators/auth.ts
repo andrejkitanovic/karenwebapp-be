@@ -52,6 +52,6 @@ export const postRegister = [
 ];
 
 export const putMe = [
-  body("name", i18n.__("VALIDATOR.NAME.REQUIRED")).notEmpty(),
+  // body("name", i18n.__("VALIDATOR.NAME.REQUIRED")).notEmpty(),
   // body('phone', i18n.__('VALIDATOR.PASSWORD.REQUIRED')).notEmpty(),
 ];

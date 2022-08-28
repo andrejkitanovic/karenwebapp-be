@@ -23,6 +23,7 @@ export interface IPost extends Document {
   opinion: string;
   content: string;
   address: {
+    formatted: string;
     location: { lat: string; lng: string };
   };
   votes: {
@@ -56,6 +57,12 @@ const postSchema: Schema = new Schema(
     content: {
       type: String,
       required: true,
+    },
+    address: {
+      formatted: {
+        type: String,
+        // required: true,
+      },
     },
     votes: {
       up: [

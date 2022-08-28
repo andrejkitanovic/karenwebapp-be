@@ -11,7 +11,6 @@ export type RoleType = `${Roles}`;
 
 export interface IUser extends Document {
   role: RoleType;
-  permissions: PermissionsType[];
   confirmed: boolean;
   email: string;
   password: string;
@@ -32,7 +31,9 @@ export interface IUser extends Document {
   // Payment
   stripeId?: string;
 
-  withCompany: () => void;
+  // Attached
+  recentSubmissions?: number;
+  permissions?: PermissionsType[];
 }
 
 const userSchema: Schema = new Schema(
@@ -42,7 +43,6 @@ const userSchema: Schema = new Schema(
       enum: Roles,
       required: true,
     },
-    permissions: [{ type: String }],
     confirmed: {
       type: Boolean,
       default: false,
@@ -107,6 +107,10 @@ const userSchema: Schema = new Schema(
     stripeId: {
       type: String,
     },
+
+    // ATTACHED
+    permissions: [{ type: String }],
+    recentSubmissions: { type: Number },
   },
   { timestamps: true }
 );

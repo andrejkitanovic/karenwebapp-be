@@ -11,8 +11,6 @@ import { createCommentNotification } from "./notification";
 
 export const getComments: RequestHandler = async (req, res, next) => {
   try {
-    // const { id } = req.auth;
-
     const { data: posts, count } = await queryFilter({
       Model: Comment,
       query: req.query,
@@ -24,8 +22,6 @@ export const getComments: RequestHandler = async (req, res, next) => {
           path: "replies",
         },
       ],
-      // searchFields: ['name', 'email'],
-      // defaultFilters: { _id: { $ne: id } },
     });
 
     res.json({

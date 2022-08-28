@@ -1,8 +1,10 @@
 import bcrypt from "bcryptjs";
+import dayjs from "dayjs";
 import { RequestHandler } from "express";
 import i18n from "helpers/i18n";
 import { adminPermissions } from "helpers/permissions";
 import jwt from "jsonwebtoken";
+import Post from "models/post";
 import User, { IUser } from "models/user";
 import { googleGetLocation } from "utils/google";
 import { sendEmailVerification, sendEmailWelcome } from "utils/mailer";
@@ -14,9 +16,15 @@ export const getMe: RequestHandler = async (req, res, next) => {
     const { id } = req.auth;
 
     const me = (await User.findById(id).select("+pinnedPosts")) as IUser;
-    // await me.withCompany();
+    const recentSubmissions = await Post.count({
+      user: id,
+      createdAt: {
+        $gt: dayjs().subtract(1, "week"),
+      },
+    });
 
     me.permissions = adminPermissions;
+    me.recentSubmissions = recentSubmissions;
 
     res.json({
       data: me,
@@ -97,7 +105,7 @@ export const postRegister: RequestHandler = async (req, res, next) => {
 export const putMe: RequestHandler = async (req, res, next) => {
   try {
     const { id } = req.auth;
-    const { name, line, state, zip, phone } = req.body;
+    const { line, state, zip, phone } = req.body;
 
     let location;
     if (zip && state && line) {
@@ -105,7 +113,6 @@ export const putMe: RequestHandler = async (req, res, next) => {
     }
 
     await User.findByIdAndUpdate(id, {
-      name,
       address: {
         line,
         state,

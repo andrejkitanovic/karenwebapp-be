@@ -51,7 +51,7 @@ export const googleGetCordinatesAddress = async (
 export const googleSearchLocations = async (address: string) => {
   try {
     const query = utf8.encode(address);
-    const url = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json`;
+    const url = `https://maps.googleapis.com/maps/api/place/textsearch/json`;
     const { data }: any = await axios.get(url, {
       params: {
         inputtype: "textquery",
@@ -61,8 +61,8 @@ export const googleSearchLocations = async (address: string) => {
       },
     });
 
-    if (!data?.candidates?.length) return null;
-    const results = data.candidates;
+    if (!data?.results?.length) return null;
+    const results = data.results;
 
     const locations = results.map((result: any) => ({
       address: `${result.name} - ${result.formatted_address}`,
