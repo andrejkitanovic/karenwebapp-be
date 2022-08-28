@@ -16,6 +16,12 @@ enum PostOpinionEnum {
   SHOCKED = "shocked",
 }
 
+export type AttachmentType = {
+  path: string;
+  type: string;
+  name: string;
+};
+
 export interface IPost extends Document {
   user: string;
   category: PostCategoryEnum;
@@ -31,6 +37,7 @@ export interface IPost extends Document {
     down: string[];
   };
   comments: IComment[];
+  attachments: AttachmentType[];
 }
 
 const postSchema: Schema = new Schema(
@@ -82,6 +89,19 @@ const postSchema: Schema = new Schema(
       {
         type: Schema.Types.ObjectId,
         ref: "Comment",
+      },
+    ],
+    attachments: [
+      {
+        path: {
+          type: String,
+        },
+        type: {
+          type: String,
+        },
+        name: {
+          type: String,
+        },
       },
     ],
   },

@@ -1,311 +1,321 @@
 {
-	"swagger": "2.0",
-	"info": {
-		"version": "1.0.0-alpha",
-		"title": "Karen Web App API",
-		"description": "Karen Web App API Information",
-		"license": {
-			"name": "MIT",
-			"url": "https://opensource.org/licenses/MIT"
-		}
-	},
-	"host": "https://destilerija-be.herokuapp.com",
-	"basePath": "/api",
-	"schemes": [
-		"http"
-	],
-	"consumes": [
-		"application/json"
-	],
-	"produces": [
-		"application/json"
-	],
-	"tags": [
-		{
-			"name": "Auth",
-			"description": ""
-		},
-		{
-			"name": "Users",
-			"description": ""
-		}
-	],
-	"definitions": {
-		"User": {
-			"type": "object",
-			"properties": {
-				"_id": {
-					"description": "User ID.\n@example 507f191e810c19729de860ea",
-					"type": "string",
-					"format": "uuid"
-				},
-				"role": {
-					"description": "User Role.\n@example organisation-owner",
-					"type": "string",
-					"enum": [
-						"admin",
-						"business",
-						"participant"
-					]
-				},
-				"confirmed": {
-					"description": "User Confirmation Status.\n@example true",
-					"type": "boolean"
-				},
-				"permissions": {
-					"description": "User Permissions.\n@example ['read:users', 'write:users']",
-					"type": "array",
-					"items": {
-						"type": "string"
-					}
-				},
-				"email": {
-					"description": "User Email.\n@example user@gmail.com",
-					"type": "string",
-					"format": "email"
-				},
-				"password": {
-					"description": "User Password Encrypted.",
-					"type": "string"
-				},
-				"name": {
-					"description": "User Full Name.\n@example John Johnson",
-					"type": "string"
-				},
-				"followers": {
-					"description": "User Followers.",
-					"type": "array",
-					"items": {
-						"type": "string"
-					}
-				},
-				"following": {
-					"description": "User Following.",
-					"type": "array",
-					"items": {
-						"type": "string"
-					}
-				},
-				"pinnedPosts": {
-					"description": "User Pinned Posts.",
-					"type": "array",
-					"items": {
-						"type": "string"
-					}
-				},
-				"address": {
-					"description": "User Address.",
-					"type": "object",
-					"properties": {
-						"line": {
-							"description": "User Address Street line",
-							"type": "string"
-						},
-						"state": {
-							"description": "User Address State",
-							"type": "string"
-						},
-						"zip": {
-							"description": "User Address Zip",
-							"type": "string"
-						}
-					}
-				},
-				"phone": {
-					"description": "User Phone Number.",
-					"type": "string"
-				},
-				"companyAdministrator": {
-					"description": "Company User Administrator.",
-					"type": "string"
-				},
-				"companyType": {
-					"description": "Company User Type.",
-					"type": "string"
-				}
-			},
-			"required": [
-				"_id",
-				"organisation",
-				"role",
-				"confirmed",
-				"permissions",
-				"email",
-				"password",
-				"name",
-				"followers",
-				"following"
-			]
-		},
-		"Post": {
-			"type": "object",
-			"properties": {
-				"_id": {
-					"description": "Post ID.\n@example 507f191e810c19729de860ea",
-					"type": "string",
-					"format": "uuid"
-				},
-				"user": {
-					"description": "Post Creator.",
-					"$ref": "#/definitions/User"
-				},
-				"category": {
-					"description": "Post Category.\n@example The Negotiator",
-					"type": "string"
-				},
-				"involved": {
-					"description": "Post Involved.\n@example Manager",
-					"type": "string"
-				},
-				"opinion": {
-					"description": "Post Opinion.\n@example Mad",
-					"type": "string"
-				},
-				"content": {
-					"description": "Post Content.\n@example <h1>New Blog</h1><p>This is my blog</p>",
-					"type": "string"
-				},
-				"votes": {
-					"description": "Post Votes.",
-					"type": "object",
-					"properties": {
-						"up": {
-							"description": "Post Upvotes.",
-							"type": "array",
-							"items": {
-								"type": "string"
-							}
-						},
-						"down": {
-							"description": "Post Downvotes.",
-							"type": "array",
-							"items": {
-								"type": "string"
-							}
-						}
-					},
-					"required": [
-						"up",
-						"down"
-					]
-				},
-				"comments": {
-					"description": "Post Comments.",
-					"type": "array",
-					"items": {
-						"$ref": "#/definitions/Comment"
-					}
-				},
-				"createdAt": {
-					"description": "Post Creation Date.",
-					"type": "string"
-				},
-				"updatedAt": {
-					"description": "Post Latest Update Date.",
-					"type": "string"
-				}
-			},
-			"required": [
-				"_id",
-				"user",
-				"content",
-				"votes",
-				"comments",
-				"createdAt",
-				"updatedAt"
-			]
-		},
-		"Comment": {
-			"type": "object",
-			"properties": {
-				"_id": {
-					"description": "Comment ID.\n@example 507f191e810c19729de860ea",
-					"type": "string",
-					"format": "uuid"
-				},
-				"user": {
-					"description": "Comment Creator.",
-					"$ref": "#/definitions/User"
-				},
-				"post": {
-					"description": "Comment Post.",
-					"$ref": "#/definitions/Post"
-				},
-				"content": {
-					"description": "Comment Content.\n@example Usefull comment, thank you!",
-					"type": "string"
-				},
-				"replies": {
-					"description": "Comment Replies.",
-					"type": "array",
-					"items": {
-						"$ref": "#/definitions/Comment"
-					}
-				},
-				"createdAt": {
-					"description": "Comment Creation Date.",
-					"type": "string"
-				},
-				"updatedAt": {
-					"description": "Comment Latest Update Date.",
-					"type": "string"
-				}
-			},
-			"required": [
-				"_id",
-				"user",
-				"post",
-				"content",
-				"replies",
-				"createdAt",
-				"updatedAt"
-			]
-		},
-		"Notification": {
-			"type": "object",
-			"properties": {
-				"_id": {
-					"description": "Notification ID.\n@example 507f191e810c19729de860ea",
-					"type": "string",
-					"format": "uuid"
-				},
-				"user": {
-					"description": "Notification Reciever.",
-					"$ref": "#/definitions/User"
-				},
-				"target": {
-					"description": "Notification Target.",
-					"$ref": "#/definitions/User"
-				},
-				"type": {
-					"description": "Notification Type.",
-					"type": "string",
-					"enum": [
-						"comment"
-					]
-				},
-				"opened": {
-					"description": "Notification Opened.",
-					"type": "boolean"
-				},
-				"createdAt": {
-					"description": "Notification Creation Date.",
-					"type": "string"
-				},
-				"updatedAt": {
-					"description": "Notification Latest Update Date.",
-					"type": "string"
-				}
-			},
-			"required": [
-				"_id",
-				"user",
-				"target",
-				"content",
-				"opened",
-				"createdAt",
-				"updatedAt"
-			]
-		}
-	}
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0-alpha",
+    "title": "Karen Web App API",
+    "description": "Karen Web App API Information",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "https://destilerija-be.herokuapp.com",
+  "basePath": "/api",
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": ""
+    },
+    {
+      "name": "Users",
+      "description": ""
+    }
+  ],
+  "definitions": {
+    "Attachment": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "description": "Attachment URL",
+          "type": "string"
+        },
+        "type": {
+          "description": "Attachment URL",
+          "type": "string"
+        },
+        "name": {
+          "description": "Attachment URL",
+          "type": "string"
+        }
+      },
+      "required": ["path", "type", "name"]
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "description": "User ID.\n@example 507f191e810c19729de860ea",
+          "type": "string",
+          "format": "uuid"
+        },
+        "role": {
+          "description": "User Role.\n@example organisation-owner",
+          "type": "string",
+          "enum": ["admin", "business", "participant"]
+        },
+        "confirmed": {
+          "description": "User Confirmation Status.\n@example true",
+          "type": "boolean"
+        },
+        "permissions": {
+          "description": "User Permissions.\n@example ['read:users', 'write:users']",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "email": {
+          "description": "User Email.\n@example user@gmail.com",
+          "type": "string",
+          "format": "email"
+        },
+        "password": {
+          "description": "User Password Encrypted.",
+          "type": "string"
+        },
+        "name": {
+          "description": "User Full Name.\n@example John Johnson",
+          "type": "string"
+        },
+        "followers": {
+          "description": "User Followers.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "following": {
+          "description": "User Following.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "pinnedPosts": {
+          "description": "User Pinned Posts.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "address": {
+          "description": "User Address.",
+          "type": "object",
+          "properties": {
+            "line": {
+              "description": "User Address Street line",
+              "type": "string"
+            },
+            "state": {
+              "description": "User Address State",
+              "type": "string"
+            },
+            "zip": {
+              "description": "User Address Zip",
+              "type": "string"
+            }
+          }
+        },
+        "phone": {
+          "description": "User Phone Number.",
+          "type": "string"
+        },
+        "companyAdministrator": {
+          "description": "Company User Administrator.",
+          "type": "string"
+        },
+        "companyType": {
+          "description": "Company User Type.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "_id",
+        "organisation",
+        "role",
+        "confirmed",
+        "permissions",
+        "email",
+        "password",
+        "name",
+        "followers",
+        "following"
+      ]
+    },
+    "Post": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "description": "Post ID.\n@example 507f191e810c19729de860ea",
+          "type": "string",
+          "format": "uuid"
+        },
+        "user": {
+          "description": "Post Creator.",
+          "$ref": "#/definitions/User"
+        },
+        "category": {
+          "description": "Post Category.\n@example The Negotiator",
+          "type": "string"
+        },
+        "involved": {
+          "description": "Post Involved.\n@example Manager",
+          "type": "string"
+        },
+        "opinion": {
+          "description": "Post Opinion.\n@example Mad",
+          "type": "string"
+        },
+        "content": {
+          "description": "Post Content.\n@example <h1>New Blog</h1><p>This is my blog</p>",
+          "type": "string"
+        },
+        "votes": {
+          "description": "Post Votes.",
+          "type": "object",
+          "properties": {
+            "up": {
+              "description": "Post Upvotes.",
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "down": {
+              "description": "Post Downvotes.",
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": ["up", "down"]
+        },
+        "comments": {
+          "description": "Post Comments.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Comment"
+          }
+        },
+        "attachments": {
+          "description": "Post Attachments.",
+          "type": "array",
+          "items": {
+            "type": "#/definitions/Attachment"
+          }
+        },
+        "createdAt": {
+          "description": "Post Creation Date.",
+          "type": "string"
+        },
+        "updatedAt": {
+          "description": "Post Latest Update Date.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "_id",
+        "user",
+        "content",
+        "votes",
+        "comments",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Comment": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "description": "Comment ID.\n@example 507f191e810c19729de860ea",
+          "type": "string",
+          "format": "uuid"
+        },
+        "user": {
+          "description": "Comment Creator.",
+          "$ref": "#/definitions/User"
+        },
+        "post": {
+          "description": "Comment Post.",
+          "$ref": "#/definitions/Post"
+        },
+        "content": {
+          "description": "Comment Content.\n@example Usefull comment, thank you!",
+          "type": "string"
+        },
+        "replies": {
+          "description": "Comment Replies.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Comment"
+          }
+        },
+        "createdAt": {
+          "description": "Comment Creation Date.",
+          "type": "string"
+        },
+        "updatedAt": {
+          "description": "Comment Latest Update Date.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "_id",
+        "user",
+        "post",
+        "content",
+        "replies",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Notification": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "description": "Notification ID.\n@example 507f191e810c19729de860ea",
+          "type": "string",
+          "format": "uuid"
+        },
+        "user": {
+          "description": "Notification Reciever.",
+          "$ref": "#/definitions/User"
+        },
+        "target": {
+          "description": "Notification Target.",
+          "$ref": "#/definitions/User"
+        },
+        "type": {
+          "description": "Notification Type.",
+          "type": "string",
+          "enum": ["comment"]
+        },
+        "opened": {
+          "description": "Notification Opened.",
+          "type": "boolean"
+        },
+        "createdAt": {
+          "description": "Notification Creation Date.",
+          "type": "string"
+        },
+        "updatedAt": {
+          "description": "Notification Latest Update Date.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "_id",
+        "user",
+        "target",
+        "content",
+        "opened",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  }
 }

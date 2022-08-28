@@ -3,7 +3,7 @@ import { queryFilter } from "helpers/filters";
 import i18n from "helpers/i18n";
 import { createMeta } from "helpers/meta";
 import Comment from "models/comment";
-import Post, { PostCategoryEnum } from "models/post";
+import Post, { AttachmentType, PostCategoryEnum } from "models/post";
 import User from "models/user";
 
 export const getPosts: RequestHandler = async (req, res, next) => {
@@ -54,12 +54,25 @@ export const postPost: RequestHandler = async (req, res, next) => {
     const { id } = req.auth;
     const { category, involved, opinion, content } = req.body;
 
+    const attachments: AttachmentType[] = [];
+
+    if (req.files?.length) {
+      Array.prototype.slice.call(req.files).forEach((file) => {
+        attachments.push({
+          path: file.path,
+          type: file.mimetype,
+          name: file.originalname,
+        });
+      });
+    }
+
     await Post.create({
       user: id,
       category,
       involved,
       opinion,
       content,
+      attachments,
     });
 
     res.json({

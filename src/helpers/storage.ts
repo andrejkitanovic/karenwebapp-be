@@ -13,6 +13,6 @@ export default function (app: Express) {
     },
   });
 
-  app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
-  app.use(multer({ storage }).single("file"));
+  app.use("/uploads", express.static(path.join(__dirname, "../../uploads")));
+  app.use(multer({ storage }).array("files"));
 }
