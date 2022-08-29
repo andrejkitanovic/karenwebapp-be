@@ -11,9 +11,15 @@
   },
   "host": "https://destilerija-be.herokuapp.com",
   "basePath": "/api",
-  "schemes": ["http"],
-  "consumes": ["application/json"],
-  "produces": ["application/json"],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
   "tags": [
     {
       "name": "Auth",
@@ -41,7 +47,11 @@
           "type": "string"
         }
       },
-      "required": ["path", "type", "name"]
+      "required": [
+        "path",
+        "type",
+        "name"
+      ]
     },
     "User": {
       "type": "object",
@@ -54,7 +64,11 @@
         "role": {
           "description": "User Role.\n@example organisation-owner",
           "type": "string",
-          "enum": ["admin", "business", "participant"]
+          "enum": [
+            "admin",
+            "business",
+            "participant"
+          ]
         },
         "confirmed": {
           "description": "User Confirmation Status.\n@example true",
@@ -192,7 +206,10 @@
               }
             }
           },
-          "required": ["up", "down"]
+          "required": [
+            "up",
+            "down"
+          ]
         },
         "comments": {
           "description": "Post Comments.",
@@ -206,6 +223,32 @@
           "type": "array",
           "items": {
             "type": "#/definitions/Attachment"
+          }
+        },
+        "address": {
+          "description": "Post Address.",
+          "type": "object",
+          "properties": {
+            "formatted": {
+              "description": "Post Address Formatted.",
+              "type": "string"
+            },
+            "location": {
+              "description": "Post Address Formatted.",
+              "type": "object",
+              "properties": {
+                "lat": {
+                  "type": "string"
+                },
+                "lng": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "lat",
+                "lng"
+              ]
+            }
           }
         },
         "createdAt": {
@@ -223,6 +266,7 @@
         "content",
         "votes",
         "comments",
+        "address",
         "createdAt",
         "updatedAt"
       ]
@@ -292,7 +336,9 @@
         "type": {
           "description": "Notification Type.",
           "type": "string",
-          "enum": ["comment"]
+          "enum": [
+            "comment"
+          ]
         },
         "opened": {
           "description": "Notification Opened.",
