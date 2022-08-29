@@ -68,7 +68,14 @@ const postSchema: Schema = new Schema(
     address: {
       formatted: {
         type: String,
-        // required: true,
+      },
+      location: {
+        lat: {
+          type: String,
+        },
+        lng: {
+          type: String,
+        },
       },
     },
     votes: {

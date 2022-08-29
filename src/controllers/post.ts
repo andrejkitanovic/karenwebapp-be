@@ -52,7 +52,8 @@ export const getPosts: RequestHandler = async (req, res, next) => {
 export const postPost: RequestHandler = async (req, res, next) => {
   try {
     const { id } = req.auth;
-    const { category, involved, opinion, content } = req.body;
+    const { category, involved, opinion, content, address, location } =
+      req.body;
 
     const attachments: AttachmentType[] = [];
 
@@ -73,6 +74,10 @@ export const postPost: RequestHandler = async (req, res, next) => {
       opinion,
       content,
       attachments,
+      address: {
+        formatted: address,
+        location,
+      },
     });
 
     res.json({
