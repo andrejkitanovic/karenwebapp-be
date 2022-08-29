@@ -53,13 +53,13 @@ export const createCommentNotification = async (
   const post = (await Post.findById(postId)) as IPost;
   const user = (await User.findById(post.user)) as IUser;
 
-  if (post.user.toString() !== userId) {
-    await Notification.create({
-      user: post.user,
-      target: userId,
-      type: "comment",
-    });
-  }
+  if (post.user.toString() === userId) return;
+
+  await Notification.create({
+    user: post.user,
+    target: userId,
+    type: "comment",
+  });
 
   await sendEmailNotification({
     email: user.email,

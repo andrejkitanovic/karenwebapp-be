@@ -3,6 +3,7 @@ import {
   getSingleUser as getSingleUserController,
   getSingleUserFollowers as getSingleUserFollowersController,
   getSingleUserFollowing as getSingleUserFollowingController,
+  getSingleUserGallery as getSingleUserGalleryController,
   getUsers as getUsersController,
   postFollowUser as postFollowUserController,
 } from "controllers/user";
@@ -52,6 +53,13 @@ defineRoutes(router, [
     roles: ["participant", "business", "admin"],
     permissions: ["read:users"],
     controller: getSingleUserFollowingController,
+  },
+  {
+    method: "get",
+    route: "/gallery/:id",
+    // roles: ["participant", "business", "admin"],
+    // permissions: ["read:users"],
+    controller: getSingleUserGalleryController,
   },
 ]);
 

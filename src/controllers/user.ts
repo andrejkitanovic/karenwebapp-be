@@ -1,6 +1,7 @@
 import { RequestHandler } from "express";
 import { queryFilter } from "helpers/filters";
 import { createMeta } from "helpers/meta";
+import Post, { AttachmentType } from "models/post";
 import User, { IUser } from "models/user";
 
 export const getUsers: RequestHandler = async (req, res, next) => {
@@ -128,6 +129,26 @@ export const getSingleUserFollowing: RequestHandler = async (
 
     res.json({
       data: user?.following,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getSingleUserGallery: RequestHandler = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const attachments: AttachmentType[] = [];
+
+    const posts = await Post.find({
+      user: id,
+      attachments: { $ne: [] },
+    });
+    posts.forEach((post) => attachments.push(...post.attachments));
+
+    res.json({
+      data: attachments,
     });
   } catch (err) {
     next(err);
