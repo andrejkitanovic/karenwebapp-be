@@ -6,6 +6,28 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? "", {
   apiVersion: "2022-08-01",
 });
 
+export const stripeCheckoutSession = async (stripeId: string) => {
+  return await stripe.checkout.sessions.create({
+    billing_address_collection: "auto",
+    payment_method_types: ["card"],
+    // line_items: [{ price: products[type][plan], quantity: 1 }],
+    customer: stripeId,
+    // customer_update: {
+    //   name: "auto",
+    //   address: "auto",
+    // },
+    // tax_id_collection: {
+    //   enabled: true,
+    // },
+    mode: "subscription",
+    success_url: `${process.env.FRONTEND_URL}`,
+    cancel_url: `${process.env.FRONTEND_URL}/login`,
+    // automatic_tax: {
+    //   enabled: true,
+    // },
+  });
+};
+
 export const stripeGetBalances = async () => {
   const { available: balances } = await stripe.balance.retrieve();
   return balances;

@@ -3,8 +3,9 @@ import { queryFilter } from "helpers/filters";
 import i18n from "helpers/i18n";
 import { createMeta } from "helpers/meta";
 import Comment from "models/comment";
-import Post, { AttachmentType, PostCategoryEnum } from "models/post";
+import Post, { AttachmentType, IPost, PostCategoryEnum } from "models/post";
 import User from "models/user";
+import { unlinkMedia } from "utils/media";
 
 export const getPosts: RequestHandler = async (req, res, next) => {
   try {
@@ -93,7 +94,13 @@ export const deletePost: RequestHandler = async (req, res, next) => {
     const { id } = req.params;
 
     await Comment.deleteMany({ post: id });
-    await Post.findByIdAndDelete(id);
+    const post = (await Post.findById(id)) as IPost;
+
+    for await (const attachment of post.attachments) {
+      await unlinkMedia(attachment.path);
+    }
+
+    await post.delete();
 
     res.json({
       message: i18n.__("CONTROLLER.POST.DELETE_POST.DELETED"),
