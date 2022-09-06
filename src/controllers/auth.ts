@@ -65,7 +65,7 @@ export const postRegisterVerification: RequestHandler = async (
     await sendEmailVerification({ email, code });
 
     res.json({
-      // message: i18n.__('CONTROLLER.AUTH.POST_REGISTER.REGISTERED'),
+      message: i18n.__("CONTROLLER.AUTH.POST_REGISTER.VERIFICATION_SENT"),
     });
   } catch (err) {
     next(err);

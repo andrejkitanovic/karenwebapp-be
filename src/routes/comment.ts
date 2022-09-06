@@ -6,6 +6,11 @@ import {
 } from "controllers/comment";
 import { Router } from "express";
 import defineRoutes from "helpers/defineRoutes";
+import {
+  deleteComment as deleteCommentValidator,
+  postCommentReply as postCommentReplyValidator,
+  postComment as postCommentValidator,
+} from "validators/comment";
 
 const router = Router();
 defineRoutes(router, [
@@ -21,6 +26,7 @@ defineRoutes(router, [
     route: "/",
     roles: ["participant", "business", "admin"],
     permissions: ["write:comments"],
+    validator: postCommentValidator,
     controller: postCommentController,
   },
   {
@@ -28,6 +34,7 @@ defineRoutes(router, [
     route: "/:id",
     roles: ["participant", "business", "admin"],
     permissions: ["delete:comments"],
+    validator: deleteCommentValidator,
     controller: deleteCommentController,
   },
   {
@@ -35,6 +42,7 @@ defineRoutes(router, [
     route: "/:id/reply",
     roles: ["participant", "business", "admin"],
     permissions: ["write:comments"],
+    validator: postCommentReplyValidator,
     controller: postCommentReplyController,
   },
 ]);

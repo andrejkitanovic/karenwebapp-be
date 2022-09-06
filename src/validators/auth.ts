@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import { body } from "express-validator";
 import i18n from "helpers/i18n";
-import User from "models/user";
+import User, { Roles } from "models/user";
 
 export const postLogin = [
   body("email", i18n.__("VALIDATOR.EMAIL.REQUIRED"))
@@ -9,14 +9,19 @@ export const postLogin = [
     .isEmail()
     .withMessage(i18n.__("VALIDATOR.EMAIL.NOT_VALID"))
     .custom(async (value: string) => {
-      const userExists = await User.exists({ email: value });
+      const user = await User.findOne({ email: value }).select("confirmed");
 
-      if (!userExists) {
+      if (!user) {
         throw new Error(i18n.__("VALIDATOR.USER.NOT_FOUND"));
       }
 
-      return true;
+      // if (!user.confirmed) {
+      //   throw new Error(i18n.__("VALIDATOR.USER.NOT_CONFIRMED"));
+      // }
+
+      if (user.confirmed) return true;
     }),
+
   body("password", i18n.__("VALIDATOR.PASSWORD.REQUIRED"))
     .notEmpty()
     .custom(async (value: string, { req }) => {
@@ -33,7 +38,28 @@ export const postLogin = [
     }),
 ];
 
+export const postRegisterVerification = [
+  body("email", i18n.__("VALIDATOR.EMAIL.REQUIRED"))
+    .notEmpty()
+    .isEmail()
+    .withMessage(i18n.__("VALIDATOR.EMAIL.NOT_VALID"))
+    .custom(async (value: string) => {
+      const userExists = await User.exists({ email: value });
+
+      if (userExists) {
+        throw new Error(i18n.__("VALIDATOR.USER.EXISTS"));
+      }
+
+      return true;
+    }),
+];
+
 export const postRegister = [
+  body("role", i18n.__("VALIDATOR.ROLE.REQUIRED"))
+    .notEmpty()
+    .isIn(Object.values(Roles))
+    .withMessage(i18n.__("VALIDATOR.ROLE.ONE_OF")),
+  body("name", i18n.__("VALIDATOR.NAME.REQUIRED")).notEmpty(),
   body("email", i18n.__("VALIDATOR.EMAIL.REQUIRED"))
     .notEmpty()
     .isEmail()
@@ -48,10 +74,6 @@ export const postRegister = [
       return true;
     }),
   body("password", i18n.__("VALIDATOR.PASSWORD.REQUIRED")).notEmpty(),
-  body("name", i18n.__("VALIDATOR.NAME.REQUIRED")).notEmpty(),
 ];
 
-export const putMe = [
-  // body("name", i18n.__("VALIDATOR.NAME.REQUIRED")).notEmpty(),
-  // body('phone', i18n.__('VALIDATOR.PASSWORD.REQUIRED')).notEmpty(),
-];
+export const putMe = [];
