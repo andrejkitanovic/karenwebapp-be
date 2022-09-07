@@ -9,6 +9,14 @@ import {
 } from "controllers/user";
 import { Router } from "express";
 import defineRoutes from "helpers/defineRoutes";
+import {
+  deleteUser as deleteUserValidator,
+  getSingleUserFollowers as getSingleUserFollowersValidator,
+  getSingleUserFollowing as getSingleUserFollowingValidator,
+  getSingleUserGallery as getSingleUserGalleryValidator,
+  getSingleUser as getSingleUserValidator,
+  postFollowUser as postFollowUserValidator,
+} from "validators/user";
 
 const router = Router();
 defineRoutes(router, [
@@ -24,6 +32,7 @@ defineRoutes(router, [
     route: "/:id",
     roles: ["admin"],
     permissions: ["delete:users"],
+    validator: deleteUserValidator,
     controller: deleteUserController,
   },
   {
@@ -31,6 +40,7 @@ defineRoutes(router, [
     route: "/:id",
     roles: ["participant", "business", "admin"],
     permissions: ["read:users"],
+    validator: getSingleUserValidator,
     controller: getSingleUserController,
   },
   {
@@ -38,6 +48,7 @@ defineRoutes(router, [
     route: "/follow/:id",
     roles: ["participant", "business", "admin"],
     permissions: ["write:users"],
+    validator: postFollowUserValidator,
     controller: postFollowUserController,
   },
   {
@@ -45,6 +56,7 @@ defineRoutes(router, [
     route: "/followers/:id",
     roles: ["participant", "business", "admin"],
     permissions: ["read:users"],
+    validator: getSingleUserFollowersValidator,
     controller: getSingleUserFollowersController,
   },
   {
@@ -52,13 +64,15 @@ defineRoutes(router, [
     route: "/following/:id",
     roles: ["participant", "business", "admin"],
     permissions: ["read:users"],
+    validator: getSingleUserFollowingValidator,
     controller: getSingleUserFollowingController,
   },
   {
     method: "get",
     route: "/gallery/:id",
-    // roles: ["participant", "business", "admin"],
-    // permissions: ["read:users"],
+    roles: ["participant", "business", "admin"],
+    permissions: ["read:users"],
+    validator: getSingleUserGalleryValidator,
     controller: getSingleUserGalleryController,
   },
 ]);

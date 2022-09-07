@@ -10,6 +10,13 @@ import {
 } from "controllers/post";
 import { Router } from "express";
 import defineRoutes from "helpers/defineRoutes";
+import {
+  deletePost as deletePostValidator,
+  postDownvotePost as postDownvotePostValidator,
+  postPinPost as postPinPostValidator,
+  postPost as postPostValidator,
+  postUpvotePost as postUpvotePostValidator,
+} from "validators/post";
 
 const router = Router();
 defineRoutes(router, [
@@ -25,6 +32,7 @@ defineRoutes(router, [
     route: "/",
     roles: ["participant", "business", "admin"],
     permissions: ["write:posts"],
+    validator: postPostValidator,
     controller: postPostController,
   },
   {
@@ -32,6 +40,7 @@ defineRoutes(router, [
     route: "/:id",
     roles: ["participant", "business", "admin"],
     permissions: ["delete:posts"],
+    validator: deletePostValidator,
     controller: deletePostController,
   },
   {
@@ -46,6 +55,7 @@ defineRoutes(router, [
     route: "/upvote/:id",
     roles: ["participant", "business", "admin"],
     permissions: ["write:posts"],
+    validator: postUpvotePostValidator,
     controller: postUpvotePostController,
   },
   {
@@ -53,6 +63,7 @@ defineRoutes(router, [
     route: "/downvote/:id",
     roles: ["participant", "business", "admin"],
     permissions: ["write:posts"],
+    validator: postDownvotePostValidator,
     controller: postDownvotePostController,
   },
   {
@@ -67,6 +78,7 @@ defineRoutes(router, [
     route: "/pin/:id",
     roles: ["participant", "business", "admin"],
     permissions: ["read:posts"],
+    validator: postPinPostValidator,
     controller: postPinPostController,
   },
 ]);

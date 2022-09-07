@@ -4,6 +4,7 @@ import {
 } from "controllers/notification";
 import { Router } from "express";
 import defineRoutes from "helpers/defineRoutes";
+import { postReadNotification as postReadNotificationValidator } from "validators/notification";
 
 const router = Router();
 defineRoutes(router, [
@@ -19,6 +20,7 @@ defineRoutes(router, [
     route: "/read/:id",
     roles: ["participant", "business", "admin"],
     permissions: ["read:notifications"],
+    validator: postReadNotificationValidator,
     controller: postReadNotificationController,
   },
 ]);

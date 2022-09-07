@@ -19,7 +19,7 @@ export const postLogin = [
       //   throw new Error(i18n.__("VALIDATOR.USER.NOT_CONFIRMED"));
       // }
 
-      if (user.confirmed) return true;
+      return true;
     }),
 
   body("password", i18n.__("VALIDATOR.PASSWORD.REQUIRED"))
