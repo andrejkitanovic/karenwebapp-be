@@ -15,9 +15,9 @@ export const postLogin = [
         throw new Error(i18n.__("VALIDATOR.USER.NOT_FOUND"));
       }
 
-      // if (!user.confirmed) {
-      //   throw new Error(i18n.__("VALIDATOR.USER.NOT_CONFIRMED"));
-      // }
+      if (!user.confirmed) {
+        throw new Error(i18n.__("VALIDATOR.USER.NOT_CONFIRMED"));
+      }
 
       return true;
     }),
@@ -73,6 +73,26 @@ export const postRegister = [
 
       return true;
     }),
+  body("password", i18n.__("VALIDATOR.PASSWORD.REQUIRED")).notEmpty(),
+];
+
+export const postResetPasswordVerification = [
+  body("email", i18n.__("VALIDATOR.EMAIL.REQUIRED"))
+    .notEmpty()
+    .isEmail()
+    .withMessage(i18n.__("VALIDATOR.EMAIL.NOT_VALID"))
+    .custom(async (value: string) => {
+      const userExists = await User.exists({ email: value });
+
+      if (userExists) {
+        throw new Error(i18n.__("VALIDATOR.USER.EXISTS"));
+      }
+
+      return true;
+    }),
+];
+
+export const postResetPassword = [
   body("password", i18n.__("VALIDATOR.PASSWORD.REQUIRED")).notEmpty(),
 ];
 

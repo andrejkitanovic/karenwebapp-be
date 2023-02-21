@@ -9,7 +9,7 @@ const mailjet = nodeMailjet.connect(
 );
 const From = {
   Email: "app@karenslists.net",
-  Name: "KARENWEBAPP |",
+  Name: "KARENWEBAPP",
 };
 const SubjectPrefix = "KARENWEBAPP |";
 

@@ -7,7 +7,11 @@ import jwt from "jsonwebtoken";
 import Post from "models/post";
 import User, { IUser } from "models/user";
 import { googleGetLocation } from "utils/google";
-import { sendEmailVerification, sendEmailWelcome } from "utils/mailer";
+import {
+  sendEmailResetPassword,
+  sendEmailVerification,
+  sendEmailWelcome,
+} from "utils/mailer";
 
 import { createVerificationCode } from "./verificationCode";
 
@@ -96,6 +100,43 @@ export const postRegister: RequestHandler = async (req, res, next) => {
     res.json({
       token,
       message: i18n.__("CONTROLLER.AUTH.POST_REGISTER.REGISTERED"),
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const postResetPasswordVerification: RequestHandler = async (
+  req,
+  res,
+  next
+) => {
+  try {
+    const { email } = req.body;
+    const code = await createVerificationCode(email);
+
+    await sendEmailResetPassword({ email, code });
+
+    res.json({
+      message: i18n.__("CONTROLLER.AUTH.POST_RESET_PASSWORD.VERIFICATION_SENT"),
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const postResetPassword: RequestHandler = async (req, res, next) => {
+  try {
+    const { id, password } = req.body;
+
+    const hashedPassword = await bcrypt.hash(password, 12);
+
+    await User.findByIdAndUpdate(id, {
+      password: hashedPassword,
+    });
+
+    res.json({
+      message: i18n.__("CONTROLLER.AUTH.POST_RESET_PASSWORD.PASSWORD_RESETED"),
     });
   } catch (err) {
     next(err);

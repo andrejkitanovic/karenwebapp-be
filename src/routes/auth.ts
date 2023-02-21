@@ -3,6 +3,8 @@ import {
   postLogin as postLoginController,
   postRegister as postRegisterController,
   postRegisterVerification as postRegisterVerificationController,
+  postResetPassword as postResetPasswordController,
+  postResetPasswordVerification as postResetPasswordVerificationController,
   putMe as putMeController,
 } from "controllers/auth";
 import { Router } from "express";
@@ -11,6 +13,8 @@ import {
   postLogin as postLoginValidator,
   postRegister as postRegisterValidator,
   postRegisterVerification as postRegisterVerificationValidator,
+  postResetPassword as postResetPasswordValidator,
+  postResetPasswordVerification as postResetPasswordVerificationValidator,
   putMe as putMeValidator,
 } from "validators/auth";
 
@@ -39,6 +43,18 @@ defineRoutes(router, [
     route: "/register",
     validator: postRegisterValidator,
     controller: postRegisterController,
+  },
+  {
+    method: "post",
+    route: "/reset-password-verification",
+    validator: postResetPasswordVerificationValidator,
+    controller: postResetPasswordVerificationController,
+  },
+  {
+    method: "post",
+    route: "/reset-password",
+    validator: postResetPasswordValidator,
+    controller: postResetPasswordController,
   },
   {
     method: "put",
