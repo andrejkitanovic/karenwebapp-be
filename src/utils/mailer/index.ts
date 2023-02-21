@@ -8,8 +8,8 @@ const mailjet = nodeMailjet.connect(
   process.env.MJ_APIKEY_PRIVATE ?? ""
 );
 const From = {
-  Email: "kitanovicandrej213@gmail.com",
-  Name: "KARENWEBAPP",
+  Email: "app@karenslists.net",
+  Name: "KARENWEBAPP |",
 };
 const SubjectPrefix = "KARENWEBAPP |";
 
