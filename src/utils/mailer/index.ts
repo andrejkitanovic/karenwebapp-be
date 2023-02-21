@@ -13,7 +13,13 @@ const From = {
 };
 const SubjectPrefix = "KARENWEBAPP |";
 
-export const sendEmailVerification = async ({ email, code }: any) => {
+export const sendEmailVerification = async ({
+  email,
+  code,
+}: {
+  email: string;
+  code: string;
+}) => {
   try {
     const html = await readFile({
       path: path.join(__dirname, "./templates/verificationCode.jade"),
@@ -41,7 +47,7 @@ export const sendEmailVerification = async ({ email, code }: any) => {
   }
 };
 
-export const sendEmailWelcome = async ({ email }: any) => {
+export const sendEmailWelcome = async ({ email }: { email: string }) => {
   try {
     const html = await readFile({
       path: path.join(__dirname, "./templates/welcome.jade"),
@@ -69,11 +75,17 @@ export const sendEmailWelcome = async ({ email }: any) => {
   }
 };
 
-export const sendEmailResetPassword = async ({ email }: any) => {
+export const sendEmailResetPassword = async ({
+  email,
+  code,
+}: {
+  email: string;
+  code: string;
+}) => {
   try {
     const html = await readFile({
       path: path.join(__dirname, "./templates/resetPassword.jade"),
-      context: {},
+      context: { code },
     });
 
     await mailjet.post("send", { version: "v3.1" }).request({
@@ -97,7 +109,7 @@ export const sendEmailResetPassword = async ({ email }: any) => {
   }
 };
 
-export const sendEmailNotification = async ({ email }: any) => {
+export const sendEmailNotification = async ({ email }: { email: string }) => {
   try {
     const html = await readFile({
       path: path.join(__dirname, "./templates/notification.jade"),
