@@ -20,6 +20,7 @@
   },
   "rules": {
     "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
     "no-multiple-empty-lines": ["warn", { "max": 1, "maxBOF": 0, "maxEOF": 0 }],
     "prettier/prettier": ["warn"],
     "sort-imports": [
