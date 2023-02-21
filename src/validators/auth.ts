@@ -15,10 +15,6 @@ export const postLogin = [
         throw new Error(i18n.__("VALIDATOR.USER.NOT_FOUND"));
       }
 
-      if (!user.confirmed) {
-        throw new Error(i18n.__("VALIDATOR.USER.NOT_CONFIRMED"));
-      }
-
       return true;
     }),
 
