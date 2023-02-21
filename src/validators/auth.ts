@@ -80,8 +80,8 @@ export const postResetPasswordVerification = [
     .custom(async (value: string) => {
       const userExists = await User.exists({ email: value });
 
-      if (userExists) {
-        throw new Error(i18n.__("VALIDATOR.USER.EXISTS"));
+      if (!userExists) {
+        throw new Error(i18n.__("VALIDATOR.USER.NOT_FOUND"));
       }
 
       return true;
