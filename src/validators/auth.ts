@@ -12,7 +12,7 @@ export const postLogin = [
       const user = await User.findOne({ email: value }).select("confirmed");
 
       if (!user) {
-        throw new Error(i18n.__("VALIDATOR.USER.NOT_FOUND"));
+        throw new Error(i18n.__("VALIDATOR.INVALID_LOGIN_CREDENTIALS"));
       }
 
       return true;
@@ -27,7 +27,7 @@ export const postLogin = [
       const isValidPassword = await bcrypt.compare(value, user?.password || "");
 
       if (!isValidPassword) {
-        throw new Error(i18n.__("VALIDATOR.USER.INVALID_PASSWORD"));
+        throw new Error(i18n.__("VALIDATOR.INVALID_LOGIN_CREDENTIALS"));
       }
 
       return true;

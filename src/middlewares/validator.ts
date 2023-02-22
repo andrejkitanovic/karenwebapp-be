@@ -6,7 +6,8 @@ const validator: RequestHandler = async (req, res, next) => {
 
   if (!errors.isEmpty()) {
     const firstErrors = errors.array({ onlyFirstError: true });
-    const errorsToString = firstErrors.map((error) => error.msg).join(", ");
+    const errorsToString = firstErrors.map((error) => error.msg)?.[0] ?? "";
+
     const capitalizeError =
       errorsToString.charAt(0).toUpperCase() + errorsToString.slice(1);
 
