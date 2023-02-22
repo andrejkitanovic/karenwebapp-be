@@ -127,13 +127,16 @@ export const postResetPasswordVerification: RequestHandler = async (
 
 export const postResetPassword: RequestHandler = async (req, res, next) => {
   try {
-    const { id, password } = req.body;
+    const { email, password } = req.body;
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    await User.findByIdAndUpdate(id, {
-      password: hashedPassword,
-    });
+    await User.findOneAndUpdate(
+      { email: email },
+      {
+        password: hashedPassword,
+      }
+    );
 
     res.json({
       message: i18n.__("CONTROLLER.AUTH.POST_RESET_PASSWORD.PASSWORD_RESETED"),

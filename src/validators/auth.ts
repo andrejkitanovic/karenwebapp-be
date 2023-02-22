@@ -89,6 +89,19 @@ export const postResetPasswordVerification = [
 ];
 
 export const postResetPassword = [
+  body("email", i18n.__("VALIDATOR.EMAIL.REQUIRED"))
+    .notEmpty()
+    .isEmail()
+    .withMessage(i18n.__("VALIDATOR.EMAIL.NOT_VALID"))
+    .custom(async (value: string) => {
+      const userExists = await User.exists({ email: value });
+
+      if (!userExists) {
+        throw new Error(i18n.__("VALIDATOR.USER.NOT_FOUND"));
+      }
+
+      return true;
+    }),
   body("password", i18n.__("VALIDATOR.PASSWORD.REQUIRED")).notEmpty(),
 ];
 
