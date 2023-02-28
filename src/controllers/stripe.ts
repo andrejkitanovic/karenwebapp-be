@@ -69,6 +69,9 @@ export const postStripeCheckoutSession: RequestHandler = async (
       //   enabled: true,
       // },
       mode: "subscription",
+      subscription_data: {
+        trial_period_days: 15,
+      },
       success_url: `${process.env.FRONTEND_URL}`,
       cancel_url: `${process.env.FRONTEND_URL}/login`,
       // automatic_tax: {
