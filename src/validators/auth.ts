@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import { body } from "express-validator";
 import i18n from "helpers/i18n";
 import User, { Roles } from "models/user";
+import VerificationCode from "models/verificationCode";
 
 export const postLogin = [
   body("email", i18n.__("VALIDATOR.EMAIL.REQUIRED"))
@@ -69,6 +70,22 @@ export const postRegister = [
 
       return true;
     }),
+  body("code", i18n.__("VALIDATOR.VERIFICATION_CODE.REQUIRED"))
+    .notEmpty()
+    .custom(async (value: string, { req }) => {
+      const email = req.body.email;
+
+      const verificationCodeExists = await VerificationCode.exists({
+        assigned: email,
+        code: value,
+      });
+
+      if (!verificationCodeExists) {
+        throw new Error(i18n.__("VALIDATOR.VERIFICATION_CODE.NOT_VALID"));
+      }
+
+      return true;
+    }),
   body("password", i18n.__("VALIDATOR.PASSWORD.REQUIRED")).notEmpty(),
 ];
 
@@ -98,6 +115,22 @@ export const postResetPassword = [
 
       if (!userExists) {
         throw new Error(i18n.__("VALIDATOR.USER.NOT_FOUND"));
+      }
+
+      return true;
+    }),
+  body("code", i18n.__("VALIDATOR.VERIFICATION_CODE.REQUIRED"))
+    .notEmpty()
+    .custom(async (value: string, { req }) => {
+      const email = req.body.email;
+
+      const verificationCodeExists = await VerificationCode.exists({
+        assigned: email,
+        code: value,
+      });
+
+      if (!verificationCodeExists) {
+        throw new Error(i18n.__("VALIDATOR.VERIFICATION_CODE.NOT_VALID"));
       }
 
       return true;
