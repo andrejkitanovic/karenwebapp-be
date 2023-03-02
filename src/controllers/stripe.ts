@@ -54,12 +54,18 @@ export const postStripeCheckoutSession: RequestHandler = async (
 ) => {
   try {
     const { id } = req.auth;
+    const { type } = req.body;
     const user = await User.findById(id);
 
     const stripeCheckoutSession = await stripe.checkout.sessions.create({
       billing_address_collection: "auto",
       payment_method_types: ["card"],
-      line_items: [{ price: stripeProducts["basic"]["monthly"], quantity: 1 }],
+      line_items: [
+        {
+          price: stripeProducts["basic"][type as "monthly" | "yearly"],
+          quantity: 1,
+        },
+      ],
       customer: user?.stripeId ?? "",
       // customer_update: {
       //   name: "auto",
@@ -72,8 +78,8 @@ export const postStripeCheckoutSession: RequestHandler = async (
       subscription_data: {
         trial_period_days: 15,
       },
-      success_url: `${process.env.FRONTEND_URL}`,
-      cancel_url: `${process.env.FRONTEND_URL}/login`,
+      success_url: `${process.env.FRONTEND_URL}/register/business?success=true`,
+      cancel_url: `${process.env.FRONTEND_URL}/register/business`,
       // automatic_tax: {
       //   enabled: true,
       // },

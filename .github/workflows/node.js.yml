@@ -29,6 +29,7 @@ jobs:
           username: ${{secrets.SERVER_USERNAME}}
           password: ${{secrets.SERVER_PASSWORD}}
           script: |
+            pm2 stop 0
             cd ./karenwebapp-be
             git pull
             npm i --force
