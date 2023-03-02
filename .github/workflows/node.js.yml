@@ -33,6 +33,7 @@ jobs:
             cd ./karenwebapp-be
             git pull
             npm i --force
+            export NODE_OPTIONS="--max-old-space-size=8192"
             npm run build
             npm run copy-email-templates
             pm2 restart 0
