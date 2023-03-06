@@ -6,7 +6,6 @@ import { adminPermissions } from "helpers/permissions";
 import jwt from "jsonwebtoken";
 import Post from "models/post";
 import User, { IUser } from "models/user";
-import { googleGetLocation } from "utils/google";
 import {
   sendEmailResetPassword,
   sendEmailVerification,
@@ -149,21 +148,11 @@ export const postResetPassword: RequestHandler = async (req, res, next) => {
 export const putMe: RequestHandler = async (req, res, next) => {
   try {
     const { id } = req.auth;
-    const { line, state, zip, phone } = req.body;
-
-    let location;
-    if (zip && state && line) {
-      location = await googleGetLocation(`${zip}, ${state}, ${line}`);
-    }
+    const { name, email } = req.body;
 
     await User.findByIdAndUpdate(id, {
-      address: {
-        line,
-        state,
-        zip,
-        location,
-      },
-      phone,
+      name,
+      email,
     });
 
     res.json({
