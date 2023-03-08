@@ -78,8 +78,8 @@ export const postStripeCheckoutSession: RequestHandler = async (
       subscription_data: {
         trial_period_days: 15,
       },
-      success_url: `${process.env.FRONTEND_URL}/register/business?success=true`,
-      cancel_url: `${process.env.FRONTEND_URL}/register/business`,
+      success_url: `${process.env.FRONTEND_URL}/register/business?step=checkout&success=true`,
+      cancel_url: `${process.env.FRONTEND_URL}/register/business?step=checkout`,
       // automatic_tax: {
       //   enabled: true,
       // },
