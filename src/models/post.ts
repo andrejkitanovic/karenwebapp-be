@@ -3,17 +3,9 @@ import { Document, Schema, model } from "mongoose";
 import { IComment } from "./comment";
 
 export enum PostCategoryEnum {
-  CONSTANT_COMPLAINER = "constant-complainer",
-  THE_NEGOTIATOR = "the-negotiator",
-  DOESNT_PAY = "doesnt-pay",
-  FREE_LUNCH_LADY = "free-lunch-lady",
-  DISCOUNT_DEBBIE = "discount-debbie",
-}
-
-enum PostOpinionEnum {
-  DISAPPOINTED = "disappointed",
-  MAD = "mad",
-  SHOCKED = "shocked",
+  POSITIVE_CUSTOMER_INTERACTION = "positive-customer-interaction",
+  NEGATIVE_CUSTOMER_INTERACTION = "negative-customer-interaction",
+  NEUTRAL_CUSTOMER_INTERACTION = "neutral-customer-interaction",
 }
 
 export type AttachmentType = {
@@ -25,8 +17,6 @@ export type AttachmentType = {
 export interface IPost extends Document {
   user: string;
   category: PostCategoryEnum;
-  involved: string;
-  opinion: string;
   content: string;
   address: {
     formatted: string;
@@ -50,15 +40,6 @@ const postSchema: Schema = new Schema(
     category: {
       type: String,
       enum: PostCategoryEnum,
-      required: true,
-    },
-    involved: {
-      type: String,
-      required: true,
-    },
-    opinion: {
-      type: String,
-      enum: PostOpinionEnum,
       required: true,
     },
     content: {

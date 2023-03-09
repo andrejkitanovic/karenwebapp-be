@@ -175,14 +175,6 @@
           "description": "Post Category.\n@example The Negotiator",
           "type": "string"
         },
-        "involved": {
-          "description": "Post Involved.\n@example Manager",
-          "type": "string"
-        },
-        "opinion": {
-          "description": "Post Opinion.\n@example Mad",
-          "type": "string"
-        },
         "content": {
           "description": "Post Content.\n@example <h1>New Blog</h1><p>This is my blog</p>",
           "type": "string"

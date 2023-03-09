@@ -4,8 +4,6 @@ import Post from "models/post";
 
 export const postPost = [
   body("category", i18n.__("VALIDATOR.CATEGORY.REQUIRED")).notEmpty(),
-  body("involved", i18n.__("VALIDATOR.INVOLVED.REQUIRED")).notEmpty(),
-  body("opinion", i18n.__("VALIDATOR.OPINION.REQUIRED")).notEmpty(),
   body("content", i18n.__("VALIDATOR.CONTENT.REQUIRED")).notEmpty(),
   body("address", i18n.__("VALIDATOR.LOCATION.REQUIRED")).notEmpty(),
 ];

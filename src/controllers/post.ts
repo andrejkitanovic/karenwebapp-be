@@ -38,7 +38,7 @@ export const getPosts: RequestHandler = async (req, res, next) => {
           path: "user",
         },
       ],
-      searchFields: ["involved", "content"],
+      searchFields: ["content"],
     });
 
     res.json({
@@ -53,8 +53,7 @@ export const getPosts: RequestHandler = async (req, res, next) => {
 export const postPost: RequestHandler = async (req, res, next) => {
   try {
     const { id } = req.auth;
-    const { category, involved, opinion, content, address, location } =
-      req.body;
+    const { category, content, address, location } = req.body;
 
     const attachments: AttachmentType[] = [];
 
@@ -71,8 +70,6 @@ export const postPost: RequestHandler = async (req, res, next) => {
     await Post.create({
       user: id,
       category,
-      involved,
-      opinion,
       content,
       attachments,
       address: {
@@ -200,7 +197,7 @@ export const getPinnedPosts: RequestHandler = async (req, res, next) => {
           path: "user",
         },
       ],
-      searchFields: ["involved", "content"],
+      searchFields: ["content"],
       defaultFilters: { _id: { $in: user?.pinnedPosts } },
     });
 
