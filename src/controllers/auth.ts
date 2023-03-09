@@ -78,8 +78,15 @@ export const postRegisterVerification: RequestHandler = async (
 
 export const postRegister: RequestHandler = async (req, res, next) => {
   try {
-    const { role, name, email, password, companyAdministrator, companyType } =
-      req.body;
+    const {
+      role,
+      name,
+      email,
+      password,
+      companyAdministrator,
+      industry,
+      companyType,
+    } = req.body;
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
@@ -89,6 +96,7 @@ export const postRegister: RequestHandler = async (req, res, next) => {
       name,
       email,
       companyAdministrator,
+      industry,
       companyType,
     });
     const token = jwt.sign({ id: user._id }, process.env.DECODE_KEY || "", {

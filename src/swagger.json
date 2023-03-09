@@ -141,6 +141,10 @@
           "description": "Company User Administrator.",
           "type": "string"
         },
+        "industry": {
+          "description": "Company User Industry.",
+          "type": "string"
+        },
         "companyType": {
           "description": "Company User Type.",
           "type": "string"

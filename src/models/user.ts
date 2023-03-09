@@ -27,6 +27,7 @@ export interface IUser extends Document {
   phone?: string;
   // Company
   companyAdministrator?: string;
+  industry: string;
   companyType?: string;
   // Payment
   stripeId?: string;
@@ -98,6 +99,9 @@ const userSchema: Schema = new Schema(
     },
     // BUSINESS
     companyAdministrator: {
+      type: String,
+    },
+    industry: {
       type: String,
     },
     companyType: {
