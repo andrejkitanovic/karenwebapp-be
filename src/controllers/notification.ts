@@ -23,23 +23,18 @@ export const getNotifications: RequestHandler = async (req, res, next) => {
       defaultFilters: { user: id },
     });
 
+    await Notification.updateMany(
+      {
+        user: id,
+      },
+      {
+        opened: true,
+      }
+    );
+
     res.json({
       data: notifications,
       meta: createMeta({ count }),
-    });
-  } catch (err) {
-    next(err);
-  }
-};
-
-export const postReadNotification: RequestHandler = async (req, res, next) => {
-  try {
-    const { id: notificationId } = req.params;
-
-    await Notification.findByIdAndUpdate(notificationId, { opened: true });
-
-    res.json({
-      // message: ''
     });
   } catch (err) {
     next(err);
