@@ -36,7 +36,7 @@ export interface IUser extends Document {
     paymentId: string;
     interval: "month" | "year";
     start: Date;
-    end: Date;
+    ends: Date;
   };
 
   // Attached
@@ -133,7 +133,7 @@ const userSchema: Schema = new Schema(
       start: {
         type: Date,
       },
-      end: {
+      ends: {
         type: Date,
       },
     },
