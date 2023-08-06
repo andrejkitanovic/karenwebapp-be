@@ -66,8 +66,7 @@
           "type": "string",
           "enum": [
             "admin",
-            "business",
-            "participant"
+            "business"
           ]
         },
         "confirmed": {

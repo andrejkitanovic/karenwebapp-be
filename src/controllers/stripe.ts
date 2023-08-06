@@ -101,13 +101,19 @@ export const webhookStripe: RequestHandler = async (req, res, next) => {
     const { data, type } = req.body;
 
     const main = data.object;
-    console.log(`[STRIPE] Main Object ${main}`);
-
     const user = (await User.findOne({ stripeId: main.customer })) as IUser;
 
     switch (type) {
       case "invoice.paid":
-        console.log(`[STRIPE] Invoice paid by: ` + user.name);
+        await User.findOneAndUpdate(user._id, {
+          subscription: {
+            active: true,
+            id: main.subscription,
+            interval: main.lines.data[0].plan.interval,
+            start: new Date(main.lines.data[0].period.start * 1000),
+            ends: new Date(main.lines.data[0].period.end * 1000),
+          },
+        });
         break;
       default:
         console.log(`[STRIPE] Unhandled event type: ${type}`);

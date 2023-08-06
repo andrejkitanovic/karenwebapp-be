@@ -23,7 +23,7 @@ defineRoutes(router, [
   {
     method: "get",
     route: "/",
-    roles: ["participant", "business", "admin"],
+    roles: ["business", "admin"],
     permissions: ["read:users"],
     controller: getUsersController,
   },
@@ -38,7 +38,7 @@ defineRoutes(router, [
   {
     method: "get",
     route: "/:id",
-    roles: ["participant", "business", "admin"],
+    roles: ["business", "admin"],
     permissions: ["read:users"],
     validator: getSingleUserValidator,
     controller: getSingleUserController,
@@ -46,7 +46,7 @@ defineRoutes(router, [
   {
     method: "post",
     route: "/follow/:id",
-    roles: ["participant", "business", "admin"],
+    roles: ["business", "admin"],
     permissions: ["write:users"],
     validator: postFollowUserValidator,
     controller: postFollowUserController,
@@ -54,7 +54,7 @@ defineRoutes(router, [
   {
     method: "get",
     route: "/followers/:id",
-    roles: ["participant", "business", "admin"],
+    roles: ["business", "admin"],
     permissions: ["read:users"],
     validator: getSingleUserFollowersValidator,
     controller: getSingleUserFollowersController,
@@ -62,7 +62,7 @@ defineRoutes(router, [
   {
     method: "get",
     route: "/following/:id",
-    roles: ["participant", "business", "admin"],
+    roles: ["business", "admin"],
     permissions: ["read:users"],
     validator: getSingleUserFollowingValidator,
     controller: getSingleUserFollowingController,
@@ -70,7 +70,7 @@ defineRoutes(router, [
   {
     method: "get",
     route: "/gallery/:id",
-    roles: ["participant", "business", "admin"],
+    roles: ["business", "admin"],
     permissions: ["read:users"],
     validator: getSingleUserGalleryValidator,
     controller: getSingleUserGalleryController,

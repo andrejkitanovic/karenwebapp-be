@@ -17,14 +17,14 @@ defineRoutes(router, [
   {
     method: "get",
     route: "/",
-    roles: ["participant", "business", "admin"],
+    roles: ["business", "admin"],
     permissions: ["read:comments"],
     controller: getCommentsController,
   },
   {
     method: "post",
     route: "/",
-    roles: ["participant", "business", "admin"],
+    roles: ["business", "admin"],
     permissions: ["write:comments"],
     validator: postCommentValidator,
     controller: postCommentController,
@@ -32,7 +32,7 @@ defineRoutes(router, [
   {
     method: "delete",
     route: "/:id",
-    roles: ["participant", "business", "admin"],
+    roles: ["business", "admin"],
     permissions: ["delete:comments"],
     validator: deleteCommentValidator,
     controller: deleteCommentController,
@@ -40,7 +40,7 @@ defineRoutes(router, [
   {
     method: "post",
     route: "/:id/reply",
-    roles: ["participant", "business", "admin"],
+    roles: ["business", "admin"],
     permissions: ["write:comments"],
     validator: postCommentReplyValidator,
     controller: postCommentReplyController,

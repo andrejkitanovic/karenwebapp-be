@@ -5,7 +5,7 @@ import { Document, Schema, model } from "mongoose";
 export enum Roles {
   ADMIN = "admin",
   BUSINESS = "business",
-  PARTICIPANT = "participant",
+  // PARTICIPANT = "participant",
 }
 export type RoleType = `${Roles}`;
 
@@ -31,6 +31,13 @@ export interface IUser extends Document {
   companyType?: string;
   // Payment
   stripeId?: string;
+  subscription: {
+    active: boolean;
+    paymentId: string;
+    interval: "month" | "year";
+    start: Date;
+    end: Date;
+  };
 
   // Attached
   recentSubmissions?: number;
@@ -110,6 +117,25 @@ const userSchema: Schema = new Schema(
     // PAYMENTS
     stripeId: {
       type: String,
+    },
+    subscription: {
+      active: {
+        type: Boolean,
+        default: false,
+      },
+      paymentId: {
+        type: String,
+      },
+      interval: {
+        type: String,
+        enum: ["month", "year"],
+      },
+      start: {
+        type: Date,
+      },
+      end: {
+        type: Date,
+      },
     },
 
     // ATTACHED

@@ -7,7 +7,7 @@ defineRoutes(router, [
   {
     method: "get",
     route: "/",
-    roles: ["participant", "business", "admin"],
+    roles: ["business", "admin"],
     permissions: ["read:notifications"],
     controller: getNotificationsController,
   },

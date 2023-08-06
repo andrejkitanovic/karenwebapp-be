@@ -23,14 +23,14 @@ defineRoutes(router, [
   {
     method: "get",
     route: "/",
-    roles: ["participant", "business", "admin"],
+    roles: ["business", "admin"],
     permissions: ["read:posts"],
     controller: getPostsController,
   },
   {
     method: "post",
     route: "/",
-    roles: ["participant", "business", "admin"],
+    roles: ["business", "admin"],
     permissions: ["write:posts"],
     validator: postPostValidator,
     controller: postPostController,
@@ -38,7 +38,7 @@ defineRoutes(router, [
   {
     method: "delete",
     route: "/:id",
-    roles: ["participant", "business", "admin"],
+    roles: ["business", "admin"],
     permissions: ["delete:posts"],
     validator: deletePostValidator,
     controller: deletePostController,
@@ -46,14 +46,14 @@ defineRoutes(router, [
   {
     method: "get",
     route: "/category/count",
-    roles: ["participant", "business", "admin"],
+    roles: ["business", "admin"],
     permissions: ["read:posts"],
     controller: getPostsCategoryCountController,
   },
   {
     method: "post",
     route: "/upvote/:id",
-    roles: ["participant", "business", "admin"],
+    roles: ["business", "admin"],
     permissions: ["write:posts"],
     validator: postUpvotePostValidator,
     controller: postUpvotePostController,
@@ -61,7 +61,7 @@ defineRoutes(router, [
   {
     method: "post",
     route: "/downvote/:id",
-    roles: ["participant", "business", "admin"],
+    roles: ["business", "admin"],
     permissions: ["write:posts"],
     validator: postDownvotePostValidator,
     controller: postDownvotePostController,
@@ -69,14 +69,14 @@ defineRoutes(router, [
   {
     method: "get",
     route: "/pinned",
-    roles: ["participant", "business", "admin"],
+    roles: ["business", "admin"],
     permissions: ["read:posts"],
     controller: getPinnedPostsController,
   },
   {
     method: "post",
     route: "/pin/:id",
-    roles: ["participant", "business", "admin"],
+    roles: ["business", "admin"],
     permissions: ["read:posts"],
     validator: postPinPostValidator,
     controller: postPinPostController,

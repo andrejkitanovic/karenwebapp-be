@@ -23,7 +23,7 @@ defineRoutes(router, [
   {
     method: "get",
     route: "/me",
-    roles: ["admin", "business", "participant"],
+    roles: ["business", "admin"],
     controller: getMeController,
   },
   {
@@ -59,7 +59,7 @@ defineRoutes(router, [
   {
     method: "put",
     route: "/me",
-    roles: ["admin", "business", "participant"],
+    roles: ["business", "admin"],
     validator: putMeValidator,
     controller: putMeController,
   },
