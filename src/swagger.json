@@ -53,6 +53,30 @@
         "name"
       ]
     },
+    "Subscription": {
+      "type": "object",
+      "properties": {
+        "active": {
+          "type": "boolean"
+        },
+        "paymentId": {
+          "type": "string"
+        },
+        "interval": {
+          "type": "string",
+          "enum": [
+            "month",
+            "year"
+          ]
+        },
+        "start": {
+          "type": "string"
+        },
+        "end": {
+          "type": "boolean"
+        }
+      }
+    },
     "User": {
       "type": "object",
       "properties": {
@@ -147,6 +171,14 @@
         "companyType": {
           "description": "Company User Type.",
           "type": "string"
+        },
+        "stripeId": {
+          "description": "User Stripe ID.",
+          "type": "string"
+        },
+        "subscription": {
+          "description": "User Subscription.",
+          "$ref": "#/definitions/Subscription"
         }
       },
       "required": [
