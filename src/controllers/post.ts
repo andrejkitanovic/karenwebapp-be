@@ -4,7 +4,7 @@ import i18n from "helpers/i18n";
 import { createMeta } from "helpers/meta";
 import Comment from "models/comment";
 import Post, { AttachmentType, IPost, PostCategoryEnum } from "models/post";
-import User from "models/user";
+import User, { IUser } from "models/user";
 import { unlinkMedia } from "utils/media";
 
 export const getPosts: RequestHandler = async (req, res, next) => {
@@ -53,7 +53,15 @@ export const getPosts: RequestHandler = async (req, res, next) => {
 export const postPost: RequestHandler = async (req, res, next) => {
   try {
     const { id } = req.auth;
-    const { category, content, address, location } = req.body;
+    const {
+      category,
+      content,
+      address,
+      location,
+      interaction,
+      recommend,
+      participant,
+    } = req.body;
 
     const attachments: AttachmentType[] = [];
 
@@ -67,15 +75,22 @@ export const postPost: RequestHandler = async (req, res, next) => {
       });
     }
 
+    const user = (await User.findById(id)) as IUser;
+
     await Post.create({
-      user: id,
-      category,
+      user: user._id,
       content,
-      attachments,
       address: {
         formatted: address,
         location,
       },
+      category,
+      interaction,
+      industry: user.industry,
+      companyType: user.companyType,
+      recommend,
+      participant,
+      attachments,
     });
 
     res.json({

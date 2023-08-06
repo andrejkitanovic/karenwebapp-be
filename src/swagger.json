@@ -194,6 +194,26 @@
         "following"
       ]
     },
+    "PostParticipant": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "zip": {
+          "type": "string"
+        }
+      }
+    },
     "Post": {
       "type": "object",
       "properties": {
@@ -206,13 +226,53 @@
           "description": "Post Creator.",
           "$ref": "#/definitions/User"
         },
-        "category": {
-          "description": "Post Category.\n@example The Negotiator",
-          "type": "string"
-        },
         "content": {
           "description": "Post Content.\n@example <h1>New Blog</h1><p>This is my blog</p>",
           "type": "string"
+        },
+        "address": {
+          "description": "Post Address.",
+          "type": "object",
+          "properties": {
+            "formatted": {
+              "description": "Post Address Formatted.",
+              "type": "string"
+            },
+            "location": {
+              "description": "Post Address Formatted.",
+              "type": "object",
+              "properties": {
+                "lat": {
+                  "type": "string"
+                },
+                "lng": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "lat",
+                "lng"
+              ]
+            }
+          }
+        },
+        "category": {
+          "type": "string"
+        },
+        "interaction": {
+          "type": "string"
+        },
+        "industry": {
+          "type": "string"
+        },
+        "companyType": {
+          "type": "string"
+        },
+        "recommend": {
+          "type": "boolean"
+        },
+        "participant": {
+          "$ref": "#/definitions/PostParticipant"
         },
         "votes": {
           "description": "Post Votes.",
@@ -252,32 +312,6 @@
             "type": "#/definitions/Attachment"
           }
         },
-        "address": {
-          "description": "Post Address.",
-          "type": "object",
-          "properties": {
-            "formatted": {
-              "description": "Post Address Formatted.",
-              "type": "string"
-            },
-            "location": {
-              "description": "Post Address Formatted.",
-              "type": "object",
-              "properties": {
-                "lat": {
-                  "type": "string"
-                },
-                "lng": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "lat",
-                "lng"
-              ]
-            }
-          }
-        },
         "createdAt": {
           "description": "Post Creation Date.",
           "type": "string"
@@ -291,6 +325,7 @@
         "_id",
         "user",
         "content",
+        "category",
         "votes",
         "comments",
         "address",

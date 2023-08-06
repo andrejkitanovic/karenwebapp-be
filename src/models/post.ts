@@ -3,9 +3,15 @@ import { Document, Schema, model } from "mongoose";
 import { IComment } from "./comment";
 
 export enum PostCategoryEnum {
-  POSITIVE_CUSTOMER_INTERACTION = "positive-customer-interaction",
-  NEGATIVE_CUSTOMER_INTERACTION = "negative-customer-interaction",
-  NEUTRAL_CUSTOMER_INTERACTION = "neutral-customer-interaction",
+  GENERAL_CONVERSATION = "general-conversation",
+  EMPLOYEE_INTERACTION = "employee-interaction",
+  CUSTOMER_INTERACTION = "customer-interaction",
+}
+
+export enum PostInteractionEnum {
+  POSITIVE_INTERACTION = "positive-interaction",
+  NEGATIVE_INTERACTION = "negative-interaction",
+  NEUTRAL_INTERACTION = "neutral-interaction",
 }
 
 export type AttachmentType = {
@@ -16,12 +22,26 @@ export type AttachmentType = {
 
 export interface IPost extends Document {
   user: string;
-  category: PostCategoryEnum;
   content: string;
   address: {
     formatted: string;
     location: { lat: string; lng: string };
   };
+  category: PostCategoryEnum;
+  interaction?: PostInteractionEnum;
+  industry?: string;
+  companyType?: string;
+  recommend: boolean;
+
+  participant: {
+    name: string;
+    address: string;
+    city: string;
+    state: string;
+    zip: string;
+  };
+
+  // Additional
   votes: {
     up: string[];
     down: string[];
@@ -37,11 +57,7 @@ const postSchema: Schema = new Schema(
       ref: "User",
       required: true,
     },
-    category: {
-      type: String,
-      enum: PostCategoryEnum,
-      required: true,
-    },
+
     content: {
       type: String,
       required: true,
@@ -59,6 +75,43 @@ const postSchema: Schema = new Schema(
         },
       },
     },
+    category: {
+      type: String,
+      enum: PostCategoryEnum,
+      required: true,
+    },
+    interaction: {
+      type: String,
+      enum: PostInteractionEnum,
+    },
+    industry: {
+      type: String,
+    },
+    companyType: {
+      type: String,
+    },
+    recommend: {
+      type: Boolean,
+    },
+
+    participant: {
+      name: {
+        type: String,
+      },
+      address: {
+        type: String,
+      },
+      city: {
+        type: String,
+      },
+      state: {
+        type: String,
+      },
+      zip: {
+        type: String,
+      },
+    },
+
     votes: {
       up: [
         {
