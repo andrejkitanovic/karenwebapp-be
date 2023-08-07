@@ -6,6 +6,7 @@ import Comment from "models/comment";
 import Post, { AttachmentType, IPost, PostCategoryEnum } from "models/post";
 import User, { IUser } from "models/user";
 import { unlinkMedia } from "utils/media";
+import { searchStringAppears } from "utils/search";
 
 export const getPosts: RequestHandler = async (req, res, next) => {
   try {
@@ -44,6 +45,96 @@ export const getPosts: RequestHandler = async (req, res, next) => {
     res.json({
       data: posts,
       meta: createMeta({ count }),
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const postSearchPosts: RequestHandler = async (req, res, next) => {
+  try {
+    const { q, category } = req.body;
+
+    let posts = await Post.find({
+      category,
+    })
+      .populate({
+        path: "comments",
+        populate: {
+          path: "user",
+        },
+      })
+      .populate({
+        path: "comments",
+        populate: {
+          path: "replies",
+        },
+      })
+      .populate({
+        path: "comments",
+        populate: {
+          path: "replies",
+          populate: {
+            path: "user",
+          },
+        },
+      })
+      .populate("user")
+      .lean();
+
+    posts = posts
+      .map((post) => {
+        let score = 0;
+
+        const participantAddress = [
+          post.participant?.address,
+          post.participant?.city,
+          post?.participant?.state,
+          post.participant?.zip,
+        ]
+          .filter((v) => Boolean(v))
+          .join(" ");
+
+        const score_breakdown = {
+          participant_name: {
+            matches: searchStringAppears(post.participant?.name, q),
+            score: searchStringAppears(post.participant?.name, q) * 10,
+          },
+          participant_address: {
+            matches: searchStringAppears(participantAddress, q),
+            score: searchStringAppears(participantAddress, q) * 3,
+          },
+          business_address: {
+            matches: searchStringAppears(post.address?.formatted, q),
+            score: searchStringAppears(post.address?.formatted, q) * 3,
+          },
+          content: {
+            matches: searchStringAppears(post.content, q),
+            score: searchStringAppears(post.content, q),
+          },
+          category: {
+            matches: searchStringAppears(post.category, q),
+            score: searchStringAppears(post.category, q),
+          },
+          industry: {
+            matches: searchStringAppears(post.industry, q),
+            score: searchStringAppears(post.industry, q),
+          },
+        };
+        Object.values(score_breakdown).forEach(
+          (scoreAdd) => (score += scoreAdd.score)
+        );
+
+        return {
+          ...post,
+          score,
+        };
+      })
+      .filter((post) => post.score > 0)
+      .sort((a, b) => b.score - a.score);
+
+    res.json({
+      data: posts,
     });
   } catch (err) {
     next(err);

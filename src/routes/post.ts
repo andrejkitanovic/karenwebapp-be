@@ -6,6 +6,7 @@ import {
   postDownvotePost as postDownvotePostController,
   postPinPost as postPinPostController,
   postPost as postPostController,
+  postSearchPosts as postSearchPostsController,
   postUpvotePost as postUpvotePostController,
 } from "controllers/post";
 import { Router } from "express";
@@ -34,6 +35,14 @@ defineRoutes(router, [
     permissions: ["write:posts"],
     validator: postPostValidator,
     controller: postPostController,
+  },
+  {
+    method: "post",
+    route: "/search",
+    roles: ["business", "admin"],
+    permissions: ["read:posts"],
+    // validator: postPostValidator,
+    controller: postSearchPostsController,
   },
   {
     method: "delete",
