@@ -3,9 +3,11 @@ export const searchStringAppears = (target: string | undefined, q: string) => {
 
   let stringAppears = 0;
 
-  q.split(" ").forEach((singleQ) => {
-    stringAppears += target.split(singleQ).length - 1;
-  });
+  q.toLowerCase()
+    .split(" ")
+    .forEach((singleQ) => {
+      stringAppears += target.split(singleQ).length - 1;
+    });
 
   return stringAppears;
 };
